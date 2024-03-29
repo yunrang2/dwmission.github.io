@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission Board</title>
+<style>
+    @font-face {
+        font-family: 'CustomFont';
+        src: url('https://raw.githubusercontent.com/yunrang2/upload/master/HakgyoansimSamulhamR.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        background-color: #2ecc71; /* 초록색 배경 */
+    }
+
+    .container {
+        height: 100vh; /* 창 전체 높이 */
+        margin: auto;
+        padding: 20px;
+        box-sizing: border-box;
+        color: #fff;
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5); /* 텍스트 그림자 */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; /* 위쪽 정렬 */
+        align-items: flex-start; /* 왼쪽 정렬 */
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .text-group {
+        display: flex;
+        width: 100%;
+    }
+
+    .left-text,
+    .right-text,
+    .special-text {
+        font-family: 'CustomFont', sans-serif;
+        font-size: 48px; /* 글씨 크기를 48px로 증가 */
+        font-weight: bold;
+        padding: 10px;
+        box-sizing: border-box;
+        position: relative;
+        line-height: 1.2;
+        display: inline-block;
+        color: #fff;
+        -webkit-text-stroke: 1px black; /* 텍스트에 검은색 테두리 추가 */
+        cursor: pointer;
+    }
+
+    .left-text {
+        color: #ffffff;
+        text-align: left; /* 왼쪽 정렬 */
+        margin-right: 20px; /* 텍스트 사이 간격 조절 */
+    }
+
+    .right-text {
+        color: #8a2be2;
+        text-align: left;
+        margin-left: 20px; /* 오른쪽 텍스트의 왼쪽 여백 추가 */
+    }
+
+    .heart {
+        color: #ff0000;
+    }
+
+    .yellow-text {
+        color: yellow;
+        text-align: left;
+        margin-top: 5px;
+        font-family: 'CustomFont', sans-serif;
+        font-size: 50px;
+        text-shadow:
+            4px 0px 0 rgba(0, 0, 0, 0.5),
+            -1px -1px 0 rgba(0, 0, 0, 0.5),
+            1px -1px 0 rgba(0, 0, 0, 0.5),
+            -1px 1px 0 rgba(0, 0, 0, 0.5),
+            1px 1px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        margin-top: 20px;
+        gap: 10px; /* 버튼 간격 조절 */
+    }
+
+    .button {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        background-color: #3498db;
+        border: 2px solid black;
+        border-radius: 10px;
+        font-size: 40px;
+        cursor: pointer;
+        width: auto;
+        max-width: 200px; /* 최대 가로폭을 360px로 제한 */
+        transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+        background-color: #2980b9;
+    }
+
+    .button-container .button {
+        font-family: 'CustomFont', sans-serif; /* 새로운 폰트 적용 */
+    }
+
+    .disco-light {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-color: #fff;
+        border-radius: 50%;
+        animation: blink 2s infinite alternate;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    #buttonContainer {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="text-group">
+            <div class="left-text">
+                짤콘리액션<br>
+                마음열개<br>
+                배꼽인사<br>
+                하이킥<br>
+                지진쿵<br>
+                아봉30초<br>
+                입뿅<br>
+                <span class="special-text" onclick="toggleEffects()">ㄲㄲ</span><br> <!-- 변경된 부분 -->
+                애교<br>
+                얼낙10분<br>
+                가방속1분<br>
+                율동<br>
+                댄스<br>
+                연장30분<br>
+                의첸(야한x)<br>
+                폭풍ㅅㅅ<br>
+                108배<br>
+                방종<br>
+            </div>
+            <div class="right-text">
+                1~9<span class="heart">♥</span><br>
+                10<span class="heart">♥</span><br>
+                15<span class="heart">♥</span><br>
+                17<span class="heart">♥</span><br>
+                19<span class="heart">♥</span><br>
+                30<span class="heart">♥</span><br>
+                33<span class="heart">♥</span><br>
+                55<span class="heart">♥</span><br>
+                59<span class="heart">♥</span><br>
+                69<span class="heart">♥</span><br>
+                85<span class="heart">♥</span><br>
+                88<span class="heart">♥</span><br>
+                200<span class="heart">♥</span><br>
+                향수<span class="heart">♥</span><br>
+                777<span class="heart">♥</span><br>
+                1414<span class="heart">♥</span><br>
+                2023<span class="heart">♥</span><br>
+                12486<span class="heart">♥</span><br>
+            </div>
+        </div>
+    </div>
+    <div class="yellow-text">모든 미션 실드 +1</div>
+    <div class="button-container">
+        <div class="button">프로필</div>
+        <div class="button">방송시간</div>
+        <div class="button">시그니처</div>
+    </div>
+</div>
+
+<div class="button-container" id="buttonContainer" style="display: none;">
+    <div class="button" onclick="goBack()">←돌아가기</div>
+</div>
+
+<script>
+    function hideContent() {
+        document.querySelectorAll(".text-group, .yellow-text, .button-container").forEach(item => item.style.display = "none"); // 기존 요소 숨김
+        document.getElementById("buttonContainer").style.display = "flex"; // 돌아가기 버튼 표시
+    }
+
+    function goBack() {
+        location.reload(); // 페이지 새로고침
+    }
+
+    function toggleEffects() {
+        hideContent(); // 컨텐츠 숨기기
+        const container = document.querySelector('.container');
+
+        // 조명 효과 추가
+        for (let i = 0; i < 50; i++) {
+            const light = document.createElement('div');
+            light.classList.add('disco-light');
+            light.style.top = Math.random() * 100 + '%';
+            light.style.left = Math.random() * 100 + '%';
+            light.style.backgroundColor = randomColor();
+            container.appendChild(light);
+        }
+
+        // 배경음악 재생
+        const bgMusic = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/닭춤.mp3');
+        bgMusic.loop = true;
+        bgMusic.volume = 0.6;
+        bgMusic.play();
+    }
+
+    function randomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+</script>
+</body>
+</html>
