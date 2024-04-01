@@ -359,7 +359,7 @@
                     <span class="left-text" onclick="startHeartbeatEffect(this)">댄스</span><br>
                     <span class="special-text" onclick="startTimer(1800)">연장30분</span><br>
                     <span class="left-text" onclick="startHeartbeatEffect(this)">폭풍ㅅㅅ</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect(this)">108배</span><br>
+                    <span class="left-text" onclick="playMusicAndLights()">108배</span><br>
                     <span class="left-text" onclick="startHeartbeatEffect(this)">방종</span><br>
                 </div>
                 <div class="right-text">
@@ -379,7 +379,7 @@
                     <span class="special-text" style="color: #ff63dd;" onclick="startTimer(1800)">향수<span class="heart" style="color: #ff0000;">♥</span></span><br> 
                     <span class="right-text" onclick="startHeartbeatEffect(this)">1414<span class="heart" style="color: #ff0000;">♥</span></span><br>
                     <span class="right-text" onclick="startHeartbeatEffect(this)">2024<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="right-textt" onclick="startHeartbeatEffect(this)">12486<span class="heart" style="color: #ff0000;">♥</span></span><br>
+                    <span class="right-text" onclick="startHeartbeatEffect(this)">12486<span class="heart" style="color: #ff0000;">♥</span></span><br>
                 </div>
             </div>
         </div>
@@ -396,19 +396,19 @@
     <div class="button-container" id="buttonContainer" style="display: none;">
         <div class="button" id="goBackButton" onclick="goBack()">←돌아가기</div>
     </div>
-</div>
-<audio id="bgMusic" loop class="bg-music">
-    <source src="https://raw.githubusercontent.com/yunrang2/upload/master/닭춤.mp3" type="audio/mp3">
-</audio>
-<div id="bgMusicButton" class="button" onclick="openModal('bgMusic')">
-    <img src="https://raw.githubusercontent.com/yunrang2/upload/master/브금-cutout.png" alt="브금" style="border: none;">
-</div>
-
-<div id="bgMusicModal" class="modal" style="right: 20px; top: 50%;">
-    <div class="modal-content">
-        <div class="close" onclick="closeModal('bgMusicModal')">×</div>
     </div>
-</div>
+    <audio id="bgMusic" loop class="bg-music">
+        <source src="https://raw.githubusercontent.com/yunrang2/upload/master/닭춤.mp3" type="audio/mp3">
+    </audio>
+    <div id="bgMusicButton" class="button" onclick="openModal('bgMusic')">
+        <img src="https://raw.githubusercontent.com/yunrang2/upload/master/브금-cutout.png" alt="브금" style="border: none;">
+    </div>
+
+    <div id="bgMusicModal" class="modal" style="right: 20px; top: 50%;">
+        <div class="modal-content">
+            <div class="close" onclick="closeModal('bgMusicModal')">×</div>
+        </div>
+    </div>
 <script>
     function hideContent() {
         document.querySelectorAll(".text-group, .yellow-text, .button-container").forEach(item => item.style.display = "none"); // 기존 요소 숨김
@@ -417,6 +417,12 @@
 
     function goBack() {
         location.reload(); // 페이지 새로고침
+
+                // 브금 버튼 다시 나타내기
+        const bgMusicButton = document.getElementById('bgMusicButton');
+        if (bgMusicButton) {
+            bgMusicButton.style.display = 'block';
+        }
     }
 
     function toggleEffects() {
@@ -454,6 +460,12 @@
         rightChickenImg.classList.remove('left');
         rightChickenImg.classList.add('right');
         container.appendChild(rightChickenImg);
+
+            // 브금 버튼 숨기기
+        const bgMusicButton = document.getElementById('bgMusicButton');
+        if (bgMusicButton) {
+            bgMusicButton.style.display = 'none';
+        }
     }
 
     const goBackButton = document.getElementById('goBackButton');
@@ -648,6 +660,41 @@
     function closeModal() {
         document.getElementById("myModal").style.display = 'none';
     }
+
+    function playMusicAndLights() {
+        // 오디오 재생
+        const bgMusic = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/반야심경리믹스.mp3');
+        bgMusic.loop = true;
+        bgMusic.play();
+        
+        // 오디오가 준비되면 배경색 변경
+        bgMusic.oncanplay = function() {
+        // 빛 효과 추가
+        const container = document.querySelector('.container');
+        let isLightOn = false;
+        setInterval(function() {
+            if (isLightOn) {
+                container.style.backgroundColor = 'rgba(255, 255, 255, 0)';
+            } else {
+                container.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+            }
+            isLightOn = !isLightOn;
+        }, 200); // 0.5초 간격으로 깜박이게 설정
+    
+        // 텍스트 그룹 숨기기
+        hideContent();
+        
+        // 브금 버튼 숨기기
+        const bgMusicButton = document.getElementById('bgMusicButton');
+        if (bgMusicButton) {
+            bgMusicButton.style.display = 'none';
+        }
+    
+        const goBackButton = document.getElementById('goBackButton');
+        goBackButton.classList.add('go-back-button-style');
+    };
+}
+
 </script>
 </body>
 </html>
