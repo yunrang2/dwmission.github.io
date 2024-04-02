@@ -336,6 +336,32 @@
         left: unset; /* 기존에 설정된 왼쪽 위치 속성 제거 */
         bottom: 20px; /* 아래쪽에서 20px 위에 위치하도록 설정 */
     }
+
+    .red-flash {
+        background-color: red;
+        animation: flash 1s infinite alternate; /* 1초 간격으로 번갈아가며 깜빡이는 애니메이션 */
+    }
+    @keyframes flash {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+
+    .error-message {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: blue;
+        padding: 20px;
+        font-size: 36px;
+        color: white;
+    }
+    
+        /* 이미지가 숨겨진 상태 */
+    .popup-image img {
+            display: none;
+    }
+    
 </style>
 </head>
 <body>
@@ -390,6 +416,9 @@
             <div class="button" onclick="openModal('signature')">시그니처</div>
         </div>
     </div>
+    <div id="popup" class="popup-image" onclick="imageClicked()" style="position: fixed; top: 20px; right: 20px; width: 200px; height: 200px;" onmouseover="showImage()" onmouseout="hideImage()">
+        <img src="https://raw.githubusercontent.com/yunrang2/upload/master/누르면안댐.png" alt="누르면안되는이미지" style="width: 100%; height: 100%; border: none;">
+    </div>
 
     <div id="myModal" class="modal"></div>
 
@@ -408,8 +437,25 @@
         <div class="modal-content">
             <div class="close" onclick="closeModal('bgMusicModal')">×</div>
         </div>
-    </div>
 <script>
+    function showImage() {
+        var image = document.querySelector('.popup-image img');
+        image.style.display = 'block';
+    }
+    
+    function hideImage() {
+        var image = document.querySelector('.popup-image img');
+        image.style.display = 'none';
+    }
+
+    function stopAllAudio() {
+        var audios = document.querySelectorAll('audio');
+        audios.forEach(function(audio) {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+    }
+
     function hideContent() {
         document.querySelectorAll(".text-group, .yellow-text, .button-container").forEach(item => item.style.display = "none"); // 기존 요소 숨김
         document.getElementById("buttonContainer").style.display = "flex"; // 돌아가기 버튼 표시
@@ -694,6 +740,103 @@
         goBackButton.classList.add('go-back-button-style');
     };
 }
+            // 이미지를 클릭할 때 실행되는 함수
+    function imageClicked() {
+        var popupImage = document.getElementById('popup');
+        popupImage.style.display = 'none'; // 이미지 숨기기
+        document.querySelectorAll(".text-group, .yellow-text, .button-container").forEach(item => item.style.display = "none");
+        const bgMusicButton = document.getElementById('bgMusicButton');
+        if (bgMusicButton) {
+            bgMusicButton.style.display = 'none';
+        }
+        var alarmSound = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/%EC%95%8C%EB%9E%8C%EC%82%AC%EC%9D%B4%EB%A0%8C.mp3');
+        alarmSound.play(); // 알람 소리 재생
+
+        // 15초 후에 알람 소리를 중지
+        setTimeout(function() {
+            alarmSound.pause(); // 알람 소리 중지
+        }, 15000); // 15초를 밀리초 단위로 설정
+            // 화면에 빨간색 배경 표시
+        var container = document.getElementsByClassName('container')[0];
+        container.classList.add('red-flash');
+
+        setTimeout(function() {
+            container.classList.remove('red-flash');
+        },15000);   
+
+            // 15초 후에 실행되는 함수 호출
+        setTimeout(showErrorMessage, 15000);
+    }
+
+        // 15초 후에 실행되는 함수
+    function showErrorMessage() {
+        // 이전에 재생 중인 모든 오디오를 정지합니다.
+        stopAllAudio();
+
+        // 오류 메시지 변수 선언 및 초기화
+        var errorMessage = "";
+        errorMessage += "<span style='font-size: 205px;'>:(</span>" + "<br>" +
+            "PC에 문제가 발생하여 다시 시작해야 합니다. 일부 오류 정보를 수집하고 있습니다. 그런 다음 왼쪽 꼭지를 꺼내면 자동으로 다시 시작합니다." + "<br><br>" +
+            "40% 완료" + "<br><br>";
+
+        document.body.style.backgroundColor = 'blue';
+
+        // 오류 메시지 추가
+        var errorMessageDiv = document.createElement('div');
+        errorMessageDiv.classList.add('error-message'); // error-message 클래스 추가
+        errorMessageDiv.innerHTML = errorMessage;
+        document.body.appendChild(errorMessageDiv);
+
+        // 바코드 이미지 추가
+        var barcodeContainer = document.createElement('div');
+        barcodeContainer.style.display = 'flex';
+        barcodeContainer.style.alignItems = 'center';
+        errorMessageDiv.appendChild(barcodeContainer);
+
+        var barcodeImage = document.createElement('img');
+        barcodeImage.src = 'https://raw.githubusercontent.com/yunrang2/upload/master/%EB%B0%94%EC%BD%94%EB%93%9C.png';
+        barcodeImage.alt = '바코드';
+        barcodeImage.style.width = '300px';
+        barcodeImage.style.height = '300px';
+        barcodeContainer.appendChild(barcodeImage);
+
+        var barcodeText = document.createElement('div');
+        barcodeText.innerHTML =
+            "이 문제와 가능한 수정 사항에 대한 자세한 내용은 다음을 참조하세요." + "<br>" +
+            "https://www.fakejirong.com" + "<br><br>" +
+            "지원담당자에게 연락하는 경우에는 다음 정보를 제공하세요." + "<br>" +
+            "중지 코드: CRTICAL DAMAGE BATUM";
+        barcodeText.style.fontSize = '36px';
+        barcodeContainer.appendChild(barcodeText);
+
+        // 새로운 오디오를 재생합니다.
+        var audio = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/컴퓨터오류.mp3');
+        audio.play();
+
+            // 퍼센트 표시 애니메이션 시작
+        startPercentageAnimation();
+        }
+            // 0부터 100까지를 10초에 걸쳐 표시하는 함수
+    function startPercentageAnimation() {
+        var percentage = 0;
+        var interval = setInterval(function() {
+            if (percentage <= 100) {
+                document.body.innerHTML += percentage + "% 완료" + "<br><br>";
+                percentage++;
+            } else {
+                clearInterval(interval);
+                resetPage(); // 페이지 초기화 함수 호출
+            }
+        }, 10000 / 100); // 10초에 걸쳐서 100번 반복
+    }
+
+
+
+        // 페이지 초기화 함수
+    function resetPage() {
+        location.reload(); // 페이지 새로고침
+    }
+
 
 </script>
 </body>
