@@ -216,14 +216,16 @@
 
     .timer-container {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        top: 20px; /* 화면 상단으로 위치 변경 */
+        left: 50%;
+        transform: translateX(-50%); /* 가운데 정렬 */
         background-color: rgba(255, 255, 255, 1);
         border: 2px solid #000;
         padding: 10px 20px;
         border-radius: 10px;
         font-size: 48px;
         font-family: 'CustomFont', sans-serif;
+        z-index: 1001; /* 다른 요소 위에 표시되도록 설정 */
     }
 
     .heart {
@@ -532,7 +534,7 @@
     function randomColor() {
         const letters = '0123456789ABCDEF';
         let color = '#';
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
