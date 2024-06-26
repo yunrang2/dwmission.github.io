@@ -5,365 +5,349 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mission Board</title>
 <style>
-    @font-face {
-        font-family: 'CustomFont';
-        src: url('https://raw.githubusercontent.com/yunrang2/upload/master/HakgyoansimSamulhamR.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
+@font-face {
+    font-family: 'CustomFont';
+    src: url('https://raw.githubusercontent.com/yunrang2/upload/master/DNFBitBitv2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
-    body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden; /* 스크롤 막기 */
-        position: relative;
-        background-color: #2ecc71; /* 초록색 배경 */
-        width: 100vw; /* 뷰포트 너비로 설정 */
-        height: 100vh; /* 뷰포트 높이로 설정 */
-        box-sizing: border-box; /* 여백과 패딩을 포함한 전체 크기 설정 */
-    }
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* 스크롤 막기 */
+    position: relative;
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    font-family: 'CustomFont', sans-serif;
+}
 
-    .container {
-        width: 100%;
-        height: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-        color: #fff;
-        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5); /* 텍스트 그림자 */
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start; /* 위쪽 정렬 */
-        align-items: flex-start; /* 왼쪽 정렬 */
-    }
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    color: #fff;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
+}
 
-    .row {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    .text-group-container {
-        margin-bottom: 0px; /* 간격을 조절할 값 설정 */
-    }
+.row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
 
-    .text-group {
-        display: flex;
-        flex-direction: row; /* 세로 방향으로 정렬 */
-        margin-bottom: 0;
-    }
-    
-    .left-text,
-    .right-text {
-        margin: 0; /* 텍스트의 기본 마진 제거 */
-        margin-bottom: 2px; 
-    }
+.text-group-container {
+    margin-bottom: 0px;
+}
 
-    .left-text,
-    .right-text,
-    .special-text {
-        font-family: 'CustomFont', sans-serif;
-        font-size: 48px;
-        font-weight: bold;
-        padding: 5px 10px;
-        box-sizing: border-box;
-        position: relative;
-        line-height: 1;
-        display: inline-block;
-        color: #fff;
-        -webkit-text-stroke: 1px black;
-        cursor: pointer;
-        margin-bottom: 5px; /* 텍스트 아래 여백 추가 */
-    }
-    .special-text {
-        margin-bottom: 10px; /* 특별한 텍스트 간격 조절 */
-    }
+.text-group {
+    display: flex;
+    justify-content: space-between; /* 왼쪽 텍스트와 오른쪽 텍스트 사이에 공간 배분 */
+    width: 100%; /* 전체 너비 사용 */
+}
 
-    .left-text {
-        color: #ffffff;
-        text-align: left; /* 왼쪽 정렬 */
-        margin-right: 10px; /* 텍스트 사이 간격 조절 */
-    }
+.left-text,
+.right-text {
+    margin: 0;
+    margin-bottom: 2px;
+    transition: color 0.3s ease;
+}
 
-    .right-text {
-        color: #ff63dd;
-        text-align: right;
-        margin-bottom: 7px; /* 오른쪽 텍스트의 왼쪽 여백 추가 */
-    }
+.left-text,
+.right-text,
+.special-text {
+    font-size: 48px;
+    font-weight: bold;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    position: relative;
+    line-height: 1;
+    display: inline-block;
+    color: #fff;
+    -webkit-text-stroke: 1px black;
+    cursor: pointer;
+    margin-bottom: 5px;
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* 컬러 변화와 음영 효과 추가 */
+}
 
-    .heart {
-        color: #ff0000;
-    }
+.left-text:hover,
+.special-text:hover {
+    color: #ffcc00; /* 호버 시 텍스트 색상 변경 */
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6); /* 호버 시 텍스트 음영 효과 */
+}
 
-    .yellow-text {
-        color: yellow;
-        text-align: left;
-        margin-top: 0px; /* 이전 값: 0px */
-        margin-bottom: 0px; /* 이전 값: 0px */
-        font-family: 'CustomFont', sans-serif;
-        font-size: 50px;
-        margin-left: 80px;
-        text-shadow:
-            6px 0px 0 rgba(0, 0, 0, 0.5),
-            -1px -1px 0 rgba(0, 0, 0, 0.5),
-            1px -1px 0 rgba(0, 0, 0, 0.5),
-            -1px 1px 0 rgba(0, 0, 0, 0.5),
-            1px 1px 0 rgba(0, 0, 0, 0.5);
-    }
+.right-text {
+    color: #ff63dd; /* 원래 색상 */
+    text-align: right; /* 오른쪽 정렬 */
+}
 
-    .button-container {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        width: 100%;
-        margin-top: 10px;
-        gap: 5px; /* 버튼 간격 조절 */
-    }
+.right-text:hover {
+    color: #ffcc00; /* 호버 시 텍스트 색상 변경 */
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6); /* 호버 시 텍스트 음영 효과 */
+}
 
-    .button {
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        background-color: #3498db;
-        border: 2px solid black;
-        border-radius: 10px;
-        font-size: 40px;
-        cursor: pointer;
-        width: auto;
-        max-width: 200px; /* 최대 가로폭을 360px로 제한 */
-        transition: background-color 0.3s ease;
-    }
+.yellow-text {
+    color: yellow;
+    text-align: left;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 50px;
+    margin-left: 80px;
+    text-shadow:
+        6px 0px 0 rgba(0, 0, 0, 0.5),
+        -1px -1px 0 rgba(0, 0, 0, 0.5),
+        1px -1px 0 rgba(0, 0, 0, 0.5),
+        -1px 1px 0 rgba(0, 0, 0, 0.5),
+        1px 1px 0 rgba(0, 0, 0, 0.5);
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* 컬러 변화와 음영 효과 추가 */
+}
 
-    .button:hover {
-        background-color: #2980b9;
-    }
+.yellow-text:hover {
+    color: #ffcc00; /* 호버 시 텍스트 색상 변경 */
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6); /* 호버 시 텍스트 음영 효과 */
+}
 
-    .button-container .button {
-        font-family: 'CustomFont', sans-serif; /* 새로운 폰트 적용 */
-    }
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    gap: 5px;
+}
 
-    .disco-light {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        background-color: #fff;
-        border-radius: 50%;
-        animation: blink 1s infinite alternate; /* 깜박임을 더 빠르게 설정 */
-    }
+.button {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 40px;
+    cursor: pointer;
+    width: auto;
+    max-width: 200px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
+.button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
 
-    #buttonContainer {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-    }
+.disco-light {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: blink 1s infinite alternate;
+}
 
-    .chicken-img {
-        position: absolute;
-        bottom: 0;
-        width: 300px; /* 이미지 크기 키움 */
-        animation: dance 2s infinite alternate;
-    }
+#buttonContainer {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
 
-    .chicken-img.left {
-        left: 20px;
-    }
+.chicken-img {
+    position: absolute;
+    bottom: 0;
+    width: 300px;
+    animation: dance 2s infinite alternate;
+}
 
-    .chicken-img.right {
-        right: 20px;
-    }
+.chicken-img.left {
+    left: 20px;
+}
 
-    @keyframes dance {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(-20px); }
-    }
+.chicken-img.right {
+    right: 20px;
+}
 
-    .bg-music {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-    }
+@keyframes dance {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
 
-    #bgMusicButton {
-        position: fixed;
-        bottom: 120px;
-        right: 20px;
-        cursor: pointer; /* 마우스를 올렸을 때 포인터로 변경하여 클릭 가능한 요소임을 표시합니다. */
-        z-index: 1000;
-    }
+.bg-music {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
 
-    #bgMusicButton img {
-        width: 200px; /* 이미지의 너비를 조정합니다. */
-        height: auto; /* 이미지의 높이를 자동으로 조정하여 비율을 유지합니다. */
-        display: block; /* 인라인 요소를 블록 요소로 변경하여 다른 요소와의 레이아웃을 조정합니다. */
-        border: none; /* 이미지 주변의 디폴트 스타일인 파란색 박스를 없앱니다. */  
-        outline: none; /* 이미지 주변의 외곽선을 제거합니다. */      
-    }
+#bgMusicButton {
+    position: fixed;
+    bottom: 120px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 1000;
+}
 
-    #bgMusicButton:hover {
-        opacity: 0.8; /* 마우스를 올렸을 때 투명도를 조정하여 효과를 줍니다. */
-    }
-    
-    #goBackButton {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-    }
+#bgMusicButton img {
+    width: 200px;
+    height: auto;
+    display: block;
+    border: none;
+    outline: none;
+}
 
-    .timer-container {
-        position: fixed;
-        top: 20px; /* 화면 상단으로 위치 변경 */
-        left: 50%;
-        transform: translateX(-50%); /* 가운데 정렬 */
-        background-color: rgba(255, 255, 255, 1);
-        border: 2px solid #000;
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-size: 48px;
-        font-family: 'CustomFont', sans-serif;
-        z-index: 1001; /* 다른 요소 위에 표시되도록 설정 */
-    }
+#bgMusicButton:hover {
+    opacity: 0.8;
+}
 
-    .heart {
-        color: #ff0000;
-        animation: heartbeat 1s infinite alternate; /* 하트 비트 애니메이션 */
-    }
+#goBackButton {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
 
-    @keyframes heartbeat {
-        from {
-            transform: scale(1);
-        }
-        to {
-            transform: scale(1.1);
-        }
-    }
+.timer-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 1);
+    border: 2px solid #000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 48px;
+    z-index: 1001;
+    animation: pulse 1s infinite alternate;
+}
 
-    .modal {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #6a0dad; /* 모달 창의 바깥 색상을 자두색으로 설정합니다. */
-        z-index: 1; /* 다른 요소 위에 표시되도록 설정 */
-        width: 80%; /* 모달의 너비 */
-        max-width: 500px; /* 최대 너비 설정 */
-        background-color: #fefefe; /* 배경색 */
-        padding: 20px;
-        border: 1px solid #888; /* 테두리 설정 */
-        border-radius: 20px; /* 모달 창의 테두리를 둥글게 만듭니다. */
-        font-family: 'CustomFont', sans-serif; /* 폰트 설정 */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
     }
+    100% {
+        transform: scale(1.1);
+    }
+}
 
-    .modal-content {
-        background-color: #fefefe;
-        padding: 40px; /* 내부 패딩을 늘려 크기를 키웁니다. */
-        border-radius: 20px; /* 내부 컨텐츠의 테두리를 둥글게 만듭니다. */
-        text-align: left;
-        font-size: 42px; /* 폰트 크기를 크게 조정합니다. */
+@keyframes heartbeat {
+    from {
+        transform: scale(1);
     }
+    to {
+        transform: scale(1.1);
+    }
+}
 
-    .modal-content p {
-        color: black;
-    }
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #6a0dad;
+    z-index: 1;
+    width: 80%;
+    max-width: 500px;
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 20px;
+    font-family: 'CustomFont', sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-    .close {
-        position: absolute;
-        float: right; /* 오른쪽에 배치 */
-        top: 1px; /* 모달 내부에서 상단 여백을 조정합니다. */
-        right: 5px; /* 모달 내부에서 우측 여백을 조정합니다. */
-        cursor: pointer;
-        font-size: 36px; /* X 버튼의 크기를 크게 조정합니다. */
-        font-weight: bold; /* 글자 굵기 */
-        color: black; /* X 버튼의 색상을 지정합니다. */
-        background-color: #ffffff;
-        border: 2px solid #000000; /* X 버튼에 테두리를 추가합니다. */
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-    
-    /* X 버튼에 호버 효과 추가 */
-    .close:hover,
-    .close:focus {
-        background-color: rgb(38, 0, 255);
-        color: rgb(255, 0, 0); /* 마우스를 가져다 대거나 포커스 시 글자 색상 변경 */
-        text-decoration: none; /* 밑줄 제거 */
-        cursor: pointer; /* 포인터 모양으로 변경 */
-    }
-    
-    .modal.left {
-        left: 0;
-        transform: translate(-100%, -50%);
-    }
-    
-    .modal.right {
-        left: auto;
-        right: 50%;
-        transform: translate(50%, -50%);
-    }
+.modal-content {
+    background-color: #fefefe;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: left;
+    font-size: 42px;
+}
 
-    @keyframes modalopen {
-        from {opacity: 0}
-        to {opacity: 1}
-    }
+.modal-content p {
+    color: black;
+}
 
-    .button-container-vertical {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .button-bg-music {
-        margin: 10px;
-        padding: 10px 20px;
-        font-size: 24px;
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    
-    .button-bg-music:hover {
-        background-color: #2980b9;
-    }
+.close {
+    position: absolute;
+    float: right;
+    top: 1px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 36px;
+    font-weight: bold;
+    color: black;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 
-    #bgMusicModal.modal {
-        right: 0; /* 오른쪽 끝에 위치하도록 설정 */
-        left: unset; /* 기존에 설정된 왼쪽 위치 속성 제거 */
-        bottom: 20px; /* 아래쪽에서 20px 위에 위치하도록 설정 */
-    }
+.close:hover,
+.close:focus {
+    background-color: rgb(38, 0, 255);
+    color: rgb(255, 0, 0);
+    text-decoration: none;
+    cursor: pointer;
+}
 
-    .red-flash {
-        background-color: red;
-        animation: flash 1s infinite alternate; /* 1초 간격으로 번갈아가며 깜빡이는 애니메이션 */
-    }
-    @keyframes flash {
-        from { opacity: 1; }
-        to { opacity: 0; }
-    }
+.button-container-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    .error-message {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: blue;
-        padding: 20px;
-        font-size: 36px;
-        color: white;
-    }
-    
-        /* 이미지가 숨겨진 상태 */
-    .popup-image img {
-            display: none;
-    }
-    
+.button-bg-music {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 24px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-bg-music:hover {
+    background-color: #2980b9;
+}
+
+#bgMusicModal.modal {
+    right: 0;
+    left: unset;
+    bottom: 20px;
+}
+
+.red-flash {
+    background-color: red;
+    animation: flash 1s infinite alternate;
+}
+
+@keyframes flash {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.error-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: blue;
+    padding: 20px;
+    font-size: 36px;
+    color: white;
+}
+
+.popup-image img {
+    display: none;
+}
+
 </style>
 </head>
 <body>
@@ -379,7 +363,7 @@
                     <span class="left-text" onclick="startHeartbeatEffect(this)">지진쿵</span><br>
                     <span class="special-text" onclick="startTimer(30)">아봉30초</span><br>
                     <span class="left-text" onclick="startHeartbeatEffect(this)">입뿅</span><br>
-                    <span class="special-text" onclick="toggleEffects()">ㄲㄲ</span><br> <!-- 변경된 부분 -->
+                    <span class="special-text" onclick="toggleEffects()">ㄲㄲ</span><br>
                     <span class="left-text" onclick="startHeartbeatEffect(this)">애교</span><br>
                     <span class="special-text" onclick="startTimer(600)">얼낙10분</span><br>
                     <span class="special-text" onclick="startTimer(60)">가방속1분</span><br>
@@ -402,7 +386,7 @@
                     <span class="right-text" onclick="startHeartbeatEffect(this)">59<span class="heart" style="color: #ff0000;">♥</span></span><br>
                     <span class="special-text" style="color: #ff63dd;" onclick="startTimer(600)">69<span class="heart" style="color: #ff0000;">♥</span></span><br> 
                     <span class="special-text" style="color: #ff63dd;" onclick="startTimer(60)">85<span class="heart" style="color: #ff0000;">♥</span></span><br> 
-                    <span class="hright-text" onclick="startHeartbeatEffect(this)">88<span class="heart" style="color: #ff0000;">♥</span></span><br>
+                    <span class="right-text" onclick="startHeartbeatEffect(this)">88<span class="heart" style="color: #ff0000;">♥</span></span><br>
                     <span class="right-text" onclick="startHeartbeatEffect(this)">200<span class="heart" style="color: #ff0000;">♥</span></span><br>
                     <span class="special-text" style="color: #ff63dd;" onclick="startTimer(1800)">향수<span class="heart" style="color: #ff0000;">♥</span></span><br> 
                     <span class="right-text" onclick="startHeartbeatEffect(this)">1414<span class="heart" style="color: #ff0000;">♥</span></span><br>
@@ -534,7 +518,7 @@
     function randomColor() {
         const letters = '0123456789ABCDEF';
         let color = '#';
-        for (let i = 0; 6; i++) {
+        for (let i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
@@ -658,52 +642,18 @@
             }
         }
     });
-        // 클로저를 사용하여 이벤트 핸들러를 정의
-    document.querySelector('.close').addEventListener('click', function() {
-        closeModal.call(this); // 클로저에서 this를 사용하여 closeModal 함수 호출
-    });
 
-    // X 버튼 클릭 시 모달 창 삭제
     document.querySelectorAll('.modal .close').forEach(function(closeBtn) {
         closeBtn.addEventListener('click', function() {
             this.closest('.modal').remove();
         });
     });
 
-    // 모달 창 외부를 클릭하여 모달 창 삭제
     window.addEventListener('click', function(event) {
         if (event.target === document.getElementById("myModal")) {
             closeModal();
         }
     });
-    // 클로저를 사용하여 이벤트 핸들러를 정의
-    document.querySelector('.close').addEventListener('click', function() {
-        closeModal('myModal'); // 모달의 ID를 전달하여 closeModal 함수 호출
-    });
-
-    // 모달을 화면 중앙에 위치시키는 함수
-    function centerModal(modalId) {
-        var modal = document.getElementById(modalId);
-        var screenWidth = window.innerWidth;
-        var screenHeight = window.innerHeight;
-        var modalWidth = modal.offsetWidth;
-        var modalHeight = modal.offsetHeight;
-
-        var leftPosition = (screenWidth - modalWidth) / 2;
-        var topPosition = (screenHeight - modalHeight) / 2;
-
-        modal.style.left = leftPosition + 'px';
-        modal.style.top = topPosition + 'px';
-    }
-
-    // 프로필 모달을 중앙에 위치시킴
-    centerModal('myModal');
-
-    // 윈도우 크기가 변경될 때마다 모달을 다시 중앙에 위치시킴
-    window.addEventListener('resize', function() {
-        centerModal('myModal');
-    });
-
 
     function closeModal() {
         document.getElementById("myModal").style.display = 'none';
@@ -727,7 +677,7 @@
                 container.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
             }
             isLightOn = !isLightOn;
-        }, 200); // 0.5초 간격으로 깜박이게 설정
+        }, 200); // 0.2초 간격으로 깜박이게 설정
     
         // 텍스트 그룹 숨기기
         hideContent();
