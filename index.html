@@ -348,6 +348,227 @@ body {
     display: none;
 }
 
+#memoButton {
+    position: fixed;
+    bottom: 250px; /* 브금 버튼 위에 위치 */
+    right: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 40px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#memoButton:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+#calculatorButton {
+    position: fixed;
+    bottom: 350px; /* 메모 버튼 위에 위치 */
+    right: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 40px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#calculatorButton:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+#memoModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
+#memoModal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 36px;
+    font-weight: bold;
+    color: black;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+}
+
+#memoModal .close:hover,
+#memoModal .close:focus {
+    background-color: rgb(38, 0, 255);
+    color: rgb(255, 0, 0);
+}
+
+#memoModal textarea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    font-size: 18px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 40px;
+}
+
+#memoModal .button {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#memoModal .button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+#clearMemoButton {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+#importantMemoButtonInModal {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+.important-button {
+    position: fixed;
+    bottom: 120px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 40px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.important-button:hover {
+    background-color: #e67e22;
+    transform: scale(1.05);
+}
+
+#importantMemoModal, #fanBirthdayModal, #fanMemoModal, #addFanBirthdayModal, #addFanMemoModal, #viewFanMemoModal, #calculatorModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+}
+
+#addFanBirthdayModal input, #addFanMemoModal input, #addFanMemoModal textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+#fanBirthdayList, #fanMemoList {
+    list-style: none;
+    padding: 0;
+}
+
+#fanBirthdayList li, #fanMemoList li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#fanBirthdayList li button, #fanMemoList li button, #addFanBirthdayModal .button, #addFanMemoModal .button, #viewFanMemoModal .button {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#fanBirthdayList li button:hover, #fanMemoList li button:hover, #addFanBirthdayModal .button:hover, #addFanMemoModal .button:hover, #viewFanMemoModal .button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+#calculator {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+#calculator input {
+    grid-column: span 4;
+    padding: 10px;
+    font-size: 18px;
+    text-align: right;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+#calculator button {
+    padding: 10px;
+    font-size: 18px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#calculator button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
 </style>
 </head>
 <body>
@@ -411,385 +632,293 @@ body {
     <div class="button-container" id="buttonContainer" style="display: none;">
         <div class="button" id="goBackButton" onclick="goBack()">←돌아가기</div>
     </div>
-    </div>
-    <audio id="bgMusic" loop class="bg-music">
-        <source src="https://raw.githubusercontent.com/yunrang2/upload/master/닭춤.mp3" type="audio/mp3">
-    </audio>
-    <div id="bgMusicButton" class="button" onclick="openModal('bgMusic')">
-        <img src="https://raw.githubusercontent.com/yunrang2/upload/master/브금-cutout.png" alt="브금" style="border: none;">
-    </div>
+</div>
+<audio id="bgMusic" loop class="bg-music">
+    <source src="https://raw.githubusercontent.com/yunrang2/upload/master/닭춤.mp3" type="audio/mp3">
+</audio>
+<div id="bgMusicButton" class="button" onclick="openModal('bgMusic')">
+    <img src="https://raw.githubusercontent.com/yunrang2/upload/master/브금-cutout.png" alt="브금" style="border: none;">
+</div>
 
-    <div id="bgMusicModal" class="modal" style="right: 20px; top: 50%;">
-        <div class="modal-content">
-            <div class="close" onclick="closeModal('bgMusicModal')">×</div>
-        </div>
+<!-- 메모 버튼 및 모달 -->
+<div id="memoButton" class="button" onclick="openMemoModal()">메모</div>
+<div id="calculatorButton" class="button" onclick="openCalculatorModal()">계산기</div>
+
+<div id="memoModal" class="modal">
+    <div class="close" onclick="closeMemoModal()">×</div>
+    <textarea id="memoContent" placeholder="메모를 작성하세요..."></textarea>
+    <button id="clearMemoButton" class="button" onclick="clearMemo()">클리어</button>
+    <button id="importantMemoButtonInModal" class="button" onclick="openImportantMemoModal()">중요 메모</button>
+</div>
+
+<!-- 중요 메모 모달 -->
+<div id="importantMemoModal" class="modal">
+    <div class="close" onclick="closeImportantMemoModal()">×</div>
+    <div class="button-container-vertical">
+        <button class="button-bg-music" onclick="openFanBirthdayModal()">팬 생일</button>
+        <button class="button-bg-music" onclick="openFanMemoModal()">팬 메모</button>
+    </div>
+</div>
+
+<!-- 팬 생일 모달 -->
+<div id="fanBirthdayModal" class="modal">
+    <div class="close" onclick="closeFanBirthdayModal()">×</div>
+    <div>
+        <button class="button" onclick="openAddFanBirthdayModal()">추가</button>
+    </div>
+    <ul id="fanBirthdayList"></ul>
+</div>
+
+<!-- 팬 메모 모달 -->
+<div id="fanMemoModal" class="modal">
+    <div class="close" onclick="closeFanMemoModal()">×</div>
+    <div>
+        <button class="button" onclick="openAddFanMemoModal()">추가</button>
+    </div>
+    <ul id="fanMemoList"></ul>
+</div>
+
+<!-- 팬 생일 추가 모달 -->
+<div id="addFanBirthdayModal" class="modal">
+    <div class="close" onclick="closeAddFanBirthdayModal()">×</div>
+    <input type="text" id="fanNickname" placeholder="닉네임">
+    <input type="date" id="fanBirthday">
+    <button class="button" onclick="saveFanBirthday()">저장</button>
+</div>
+
+<!-- 팬 메모 추가 모달 -->
+<div id="addFanMemoModal" class="modal">
+    <div class="close" onclick="closeAddFanMemoModal()">×</div>
+    <input type="text" id="fanMemoNickname" placeholder="닉네임">
+    <textarea id="fanMemoContent" placeholder="메모를 작성하세요..."></textarea>
+    <button class="button" onclick="saveFanMemo()">저장</button>
+</div>
+
+<!-- 팬 메모 보기 모달 -->
+<div id="viewFanMemoModal" class="modal">
+    <div class="close" onclick="closeViewFanMemoModal()">×</div>
+    <div id="viewFanMemoContent"></div>
+</div>
+
+<!-- 계산기 모달 -->
+<div id="calculatorModal" class="modal">
+    <div class="close" onclick="closeCalculatorModal()">×</div>
+    <div id="calculator">
+        <input type="text" id="calcDisplay" readonly>
+        <button onclick="clearCalc()">C</button>
+        <button onclick="appendCalc('/')">/</button>
+        <button onclick="appendCalc('*')">*</button>
+        <button onclick="appendCalc('-')">-</button>
+        <button onclick="appendCalc('7')">7</button>
+        <button onclick="appendCalc('8')">8</button>
+        <button onclick="appendCalc('9')">9</button>
+        <button onclick="appendCalc('+')">+</button>
+        <button onclick="appendCalc('4')">4</button>
+        <button onclick="appendCalc('5')">5</button>
+        <button onclick="appendCalc('6')">6</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="appendCalc('1')">1</button>
+        <button onclick="appendCalc('2')">2</button>
+        <button onclick="appendCalc('3')">3</button>
+        <button onclick="appendCalc('0')">0</button>
+    </div>
+</div>
+
 <script>
-    function showImage() {
-        var image = document.querySelector('.popup-image img');
-        image.style.display = 'block';
-    }
-    
-    function hideImage() {
-        var image = document.querySelector('.popup-image img');
-        image.style.display = 'none';
-    }
-
-    function stopAllAudio() {
-        var audios = document.querySelectorAll('audio');
-        audios.forEach(function(audio) {
-            audio.pause();
-            audio.currentTime = 0;
-        });
-    }
-
-    function hideContent() {
-        document.querySelectorAll(".text-group, .yellow-text, .button-container").forEach(item => item.style.display = "none"); // 기존 요소 숨김
-        document.getElementById("buttonContainer").style.display = "flex"; // 돌아가기 버튼 표시
-    }
-
-    function goBack() {
-        location.reload(); // 페이지 새로고침
-
-                // 브금 버튼 다시 나타내기
-        const bgMusicButton = document.getElementById('bgMusicButton');
-        if (bgMusicButton) {
-            bgMusicButton.style.display = 'block';
-        }
-    }
-
-    function toggleEffects() {
-        hideContent(); // 컨텐츠 숨기기
-    
-        const container = document.querySelector('.container');
-        if (!container) {
-            console.error('Error: Cannot find .container element.');
-            return;
-        }
-    
-        // 배경음악 재생
-        const bgMusic = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/닭춤.mp3');
-        bgMusic.loop = true;
-        bgMusic.play();
-    
-        // 조명 효과 추가
-        for (let i = 0; i < 50; i++) {
-            const light = document.createElement('div');
-            light.classList.add('disco-light');
-            light.style.top = Math.random() * 100 + '%';
-            light.style.left = Math.random() * 100 + '%';
-            light.style.backgroundColor = randomColor();
-            container.appendChild(light);
-        }
-    
-        // 왼쪽 닭 이미지 추가
-        const leftChickenImg = document.createElement('img');
-        leftChickenImg.src = 'https://raw.githubusercontent.com/yunrang2/upload/master/dancing-chicken-ezgif.com-crop.gif';
-        leftChickenImg.classList.add('chicken-img', 'left');
-        container.appendChild(leftChickenImg);
-    
-        // 오른쪽 닭 이미지 추가
-        const rightChickenImg = leftChickenImg.cloneNode(true);
-        rightChickenImg.classList.remove('left');
-        rightChickenImg.classList.add('right');
-        container.appendChild(rightChickenImg);
-
-            // 브금 버튼 숨기기
-        const bgMusicButton = document.getElementById('bgMusicButton');
-        if (bgMusicButton) {
-            bgMusicButton.style.display = 'none';
-        }
-    }
-
-    const goBackButton = document.getElementById('goBackButton');
-    goBackButton.classList.add('go-back-button-style');
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const style = document.createElement('style');
-        style.innerHTML = `
-            .go-back-button-style {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-            }
-        `;
-        document.head.appendChild(style);
-    });
-
-    function randomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
-    let timerId; // 타이머 식별자를 저장할 변수
-    let timeLeft = 0; // 남은 시간을 저장할 변수
-
-    function startTimer(duration) {
-        const timerContainer = document.querySelector('.timer-container');
-        if (timerContainer) timerContainer.remove(); // 이전 타이머가 있다면 삭제
-
-        clearInterval(timerId); // 이전 타이머가 있다면 중지
-
-        timeLeft += duration; // 기존 시간에 추가
-        const newTimerContainer = document.createElement('div');
-        newTimerContainer.classList.add('timer-container');
-        newTimerContainer.innerText = timeLeft + '초';
-        document.body.appendChild(newTimerContainer);
-
-        timerId = setInterval(() => {
-            timeLeft--;
-            newTimerContainer.innerText = timeLeft + '초';
-
-            if (timeLeft <= 0) {
-                clearInterval(timerId);
-                newTimerContainer.remove();
-            }
-        }, 1000);
-    }
-
-    function startHeartbeatEffect(heartId) {
-        const heart = document.getElementById(heartId);
-        if (heart) {
-            heart.style.animation = 'heartbeat 1s infinite alternate'; // 하트 뿅뿅 애니메이션 적용
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const bgMusicButton = document.getElementById('bgMusicButton');
-        if (bgMusicButton) {
-            bgMusicButton.addEventListener('click', function() {
-                openModal('bgMusic');
-            });
-        }
-    });
-
-    let currentAudio = null; // 현재 재생 중인 오디오 요소를 저장할 변수
-
-    function playAudio(url) {
-        if (currentAudio) {
-            currentAudio.pause(); // 현재 재생 중인 오디오를 일시 정지
-        }
-        
-        currentAudio = new Audio(url); // 새로운 오디오 요소 생성
-        currentAudio.loop = true; // 반복 재생 설정
-        currentAudio.play(); // 오디오 재생
-    }
-
-    function openModal(type) {
-        let modalContent = `
-            <div class="modal-content">
-                <div class="close" onclick="closeModal()">×</div>`;
-                
-        if (type === 'profile') {
-            modalContent += `
-                <p>나이: 87년생</p>
-                <p>지역: 인천</p>
-                <p>키: 162cm</p>
-                <p>몸무게: top secret!</p>
-                <p>미드: C컵같은 E컵</p>`;
-        } else if (type === 'broadcast') {
-            modalContent += `
-                <p style="color: black; text-align: center;">월~금 오후 5시 ~ 저녁 9시</p>
-                <p style="color: #ff0000; text-align: center;">주말 휴방(랜덤)</p>
-                <p style="color: black; text-align: center;">(방송시간은 지맘대로 바뀔수 있음)</p>`;
-        } else if (type === 'signature') {
-            modalContent += `
-                <img src="https://raw.githubusercontent.com/yunrang2/upload/master/다원누나시그.gif" style="display: block; margin: auto; max-width: 400px;">
-                <p style="text-align: center;">51♥ 151♥ 512♥ 1051♥ 2851♥ 10051♥</p>
-                <p style="text-align: center; font-size: 60px; color: #ff0000;">응원 시그니처</p>
-                <p style="text-align: center;">280♥ 282♥ 283♥ 285♥ 286♥ 289♥ 486♥</p>`;
-        } else if (type === 'bgMusic') {
-                modalContent += `
-                <div class="button-container-vertical">
-                    <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%EC%84%B9%EC%8B%9C.mp3')">섹시</button>
-                    <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%EB%B6%88%EC%8C%8D.mp3')">불쌍</button>
-                    <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%EB%A9%B8%EB%A7%9D.mp3')">멸망</button>
-                    <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%EA%B2%8C%EC%9E%84.mp3')">게임</button>
-                    <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%ED%99%A9%EB%8B%B9.mp3')">황당</button>
-                </div>`;
-        
-                
-            // 브금 모달을 오른쪽으로 이동
-            document.getElementById("myModal").style.right = "0";
-            document.getElementById("myModal").style.left = "unset";
-        }
-        
-        modalContent += `</div>`;
-        document.getElementById("myModal").innerHTML = modalContent;
-        document.getElementById("myModal").style.display = "block";
-    }
-
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape") {
-            if (document.getElementById("myModal").style.display === "block") {
-                closeModal(); // ESC 키가 눌리면 모달 닫기
-            } else {
-                if (currentAudio) {
-                    currentAudio.pause(); // 모달이 닫혔는데도 ESC 키가 눌렸을 때 현재 재생 중인 오디오를 중지
-                }
-            }
-        }
-    });
-
-    // 모달이 닫혔는데도 ESC 키가 눌렸을 때 현재 재생 중인 오디오를 중지
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape" && document.getElementById("myModal").style.display !== "block") {
-            if (currentAudio) {
-                currentAudio.pause(); // 현재 재생 중인 오디오를 일시 정지
-            }
-        }
-    });
-
-    document.querySelectorAll('.modal .close').forEach(function(closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            this.closest('.modal').remove();
-        });
-    });
-
-    window.addEventListener('click', function(event) {
-        if (event.target === document.getElementById("myModal")) {
-            closeModal();
-        }
-    });
-
-    function closeModal() {
-        document.getElementById("myModal").style.display = 'none';
-    }
-
-    function playMusicAndLights() {
-        // 오디오 재생
-        const bgMusic = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/반야심경리믹스.mp3');
-        bgMusic.loop = true;
-        bgMusic.play();
-        
-        // 오디오가 준비되면 배경색 변경
-        bgMusic.oncanplay = function() {
-        // 빛 효과 추가
-        const container = document.querySelector('.container');
-        let isLightOn = false;
-        setInterval(function() {
-            if (isLightOn) {
-                container.style.backgroundColor = 'rgba(255, 255, 255, 0)';
-            } else {
-                container.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-            }
-            isLightOn = !isLightOn;
-        }, 200); // 0.2초 간격으로 깜박이게 설정
-    
-        // 텍스트 그룹 숨기기
-        hideContent();
-        
-        // 브금 버튼 숨기기
-        const bgMusicButton = document.getElementById('bgMusicButton');
-        if (bgMusicButton) {
-            bgMusicButton.style.display = 'none';
-        }
-    
-        const goBackButton = document.getElementById('goBackButton');
-        goBackButton.classList.add('go-back-button-style');
-    };
+// 메모 모달을 여는 함수
+function openMemoModal() {
+    const memoContent = localStorage.getItem('memo') || '';
+    document.getElementById('memoContent').value = memoContent;
+    document.getElementById('memoModal').style.display = 'block';
 }
-            // 이미지를 클릭할 때 실행되는 함수
-    function imageClicked() {
-        var popupImage = document.getElementById('popup');
-        popupImage.style.display = 'none'; // 이미지 숨기기
-        document.querySelectorAll(".text-group, .yellow-text, .button-container").forEach(item => item.style.display = "none");
-        const bgMusicButton = document.getElementById('bgMusicButton');
-        if (bgMusicButton) {
-            bgMusicButton.style.display = 'none';
-        }
-        var alarmSound = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/%EC%95%8C%EB%9E%8C%EC%82%AC%EC%9D%B4%EB%A0%8C.mp3');
-        alarmSound.play(); // 알람 소리 재생
 
-        // 15초 후에 알람 소리를 중지
-        setTimeout(function() {
-            alarmSound.pause(); // 알람 소리 중지
-        }, 15000); // 15초를 밀리초 단위로 설정
-            // 화면에 빨간색 배경 표시
-        var container = document.getElementsByClassName('container')[0];
-        container.classList.add('red-flash');
+// 메모 모달을 닫는 함수
+function closeMemoModal() {
+    const memoContent = document.getElementById('memoContent').value;
+    localStorage.setItem('memo', memoContent);
+    document.getElementById('memoModal').style.display = 'none';
+}
 
-        setTimeout(function() {
-            container.classList.remove('red-flash');
-        },15000);   
+// 메모 내용을 지우는 함수
+function clearMemo() {
+    document.getElementById('memoContent').value = '';
+}
 
-            // 15초 후에 실행되는 함수 호출
-        setTimeout(showErrorMessage, 15000);
+// 중요 메모 모달을 여는 함수
+function openImportantMemoModal() {
+    document.getElementById('memoModal').style.display = 'none';
+    document.getElementById('importantMemoModal').style.display = 'block';
+}
+
+// 중요 메모 모달을 닫는 함수
+function closeImportantMemoModal() {
+    document.getElementById('importantMemoModal').style.display = 'none';
+}
+
+// 팬 생일 모달을 여는 함수
+function openFanBirthdayModal() {
+    closeAllModals();
+    document.getElementById('fanBirthdayModal').style.display = 'block';
+}
+
+// 팬 생일 모달을 닫는 함수
+function closeFanBirthdayModal() {
+    document.getElementById('fanBirthdayModal').style.display = 'none';
+}
+
+// 팬 메모 모달을 여는 함수
+function openFanMemoModal() {
+    closeAllModals();
+    document.getElementById('fanMemoModal').style.display = 'block';
+}
+
+// 팬 메모 모달을 닫는 함수
+function closeFanMemoModal() {
+    document.getElementById('fanMemoModal').style.display = 'none';
+}
+
+// 팬 생일 추가 모달을 여는 함수
+function openAddFanBirthdayModal() {
+    closeAllModals();
+    document.getElementById('addFanBirthdayModal').style.display = 'block';
+}
+
+// 팬 생일 추가 모달을 닫는 함수
+function closeAddFanBirthdayModal() {
+    document.getElementById('addFanBirthdayModal').style.display = 'none';
+}
+
+// 팬 메모 추가 모달을 여는 함수
+function openAddFanMemoModal() {
+    closeAllModals();
+    document.getElementById('addFanMemoModal').style.display = 'block';
+}
+
+// 팬 메모 추가 모달을 닫는 함수
+function closeAddFanMemoModal() {
+    document.getElementById('addFanMemoModal').style.display = 'none';
+}
+
+// 팬 메모 보기 모달을 여는 함수
+function openViewFanMemoModal(nickname, memoContent) {
+    closeAllModals();
+    document.getElementById('viewFanMemoContent').innerText = memoContent;
+    document.getElementById('viewFanMemoModal').dataset.nickname = nickname;
+    document.getElementById('viewFanMemoModal').style.display = 'block';
+}
+
+// 팬 메모 보기 모달을 닫는 함수
+function closeViewFanMemoModal() {
+    document.getElementById('viewFanMemoModal').style.display = 'none';
+}
+
+// 팬 생일 저장 함수
+function saveFanBirthday() {
+    const nickname = document.getElementById('fanNickname').value;
+    const birthday = document.getElementById('fanBirthday').value;
+    if (nickname && birthday) {
+        const fanBirthdays = JSON.parse(localStorage.getItem('fanBirthdays') || '[]');
+        fanBirthdays.push({ nickname, birthday });
+        localStorage.setItem('fanBirthdays', JSON.stringify(fanBirthdays));
+        renderFanBirthdays();
+        closeAddFanBirthdayModal();
     }
+}
 
-        // 15초 후에 실행되는 함수
-    function showErrorMessage() {
-        // 이전에 재생 중인 모든 오디오를 정지합니다.
-        stopAllAudio();
-
-        // 오류 메시지 변수 선언 및 초기화
-        var errorMessage = "";
-        errorMessage += "<span style='font-size: 205px;'>:(</span>" + "<br>" +
-            "PC에 문제가 발생하여 다시 시작해야 합니다. 일부 오류 정보를 수집하고 있습니다. 그런 다음 왼쪽 꼭지를 꺼내면 자동으로 다시 시작합니다." + "<br><br>" +
-            "40% 완료" + "<br><br>";
-
-        document.body.style.backgroundColor = 'blue';
-
-        // 오류 메시지 추가
-        var errorMessageDiv = document.createElement('div');
-        errorMessageDiv.classList.add('error-message'); // error-message 클래스 추가
-        errorMessageDiv.innerHTML = errorMessage;
-        document.body.appendChild(errorMessageDiv);
-
-        // 바코드 이미지 추가
-        var barcodeContainer = document.createElement('div');
-        barcodeContainer.style.display = 'flex';
-        barcodeContainer.style.alignItems = 'center';
-        errorMessageDiv.appendChild(barcodeContainer);
-
-        var barcodeImage = document.createElement('img');
-        barcodeImage.src = 'https://raw.githubusercontent.com/yunrang2/upload/master/%EB%B0%94%EC%BD%94%EB%93%9C.png';
-        barcodeImage.alt = '바코드';
-        barcodeImage.style.width = '300px';
-        barcodeImage.style.height = '300px';
-        barcodeContainer.appendChild(barcodeImage);
-
-        var barcodeText = document.createElement('div');
-        barcodeText.innerHTML =
-            "이 문제와 가능한 수정 사항에 대한 자세한 내용은 다음을 참조하세요." + "<br>" +
-            "https://www.fakejirong.com" + "<br><br>" +
-            "지원담당자에게 연락하는 경우에는 다음 정보를 제공하세요." + "<br>" +
-            "중지 코드: CRTICAL DAMAGE BATUM";
-        barcodeText.style.fontSize = '36px';
-        barcodeContainer.appendChild(barcodeText);
-
-        // 새로운 오디오를 재생합니다.
-        var audio = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/컴퓨터오류.mp3');
-        audio.play();
-
-            // 퍼센트 표시 애니메이션 시작
-        startPercentageAnimation();
-        }
-            // 0부터 100까지를 10초에 걸쳐 표시하는 함수
-    function startPercentageAnimation() {
-        var percentage = 0;
-        var interval = setInterval(function() {
-            if (percentage <= 100) {
-                document.body.innerHTML += percentage + "% 완료" + "<br><br>";
-                percentage++;
-            } else {
-                clearInterval(interval);
-                resetPage(); // 페이지 초기화 함수 호출
-            }
-        }, 10000 / 100); // 10초에 걸쳐서 100번 반복
+// 팬 메모 저장 함수
+function saveFanMemo() {
+    const nickname = document.getElementById('fanMemoNickname').value;
+    const memoContent = document.getElementById('fanMemoContent').value;
+    if (nickname && memoContent) {
+        const fanMemos = JSON.parse(localStorage.getItem('fanMemos') || '[]');
+        fanMemos.push({ nickname, memoContent });
+        localStorage.setItem('fanMemos', JSON.stringify(fanMemos));
+        renderFanMemos();
+        closeAddFanMemoModal();
     }
+}
 
+// 팬 생일 리스트 렌더링 함수
+function renderFanBirthdays() {
+    const fanBirthdays = JSON.parse(localStorage.getItem('fanBirthdays') || '[]');
+    const fanBirthdayList = document.getElementById('fanBirthdayList');
+    fanBirthdayList.innerHTML = '';
+    fanBirthdays.forEach(({ nickname, birthday }, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${nickname} - ${birthday} <button onclick="deleteFanBirthday(${index})">삭제</button>`;
+        fanBirthdayList.appendChild(li);
+    });
+}
 
+// 팬 생일 삭제 함수
+function deleteFanBirthday(index) {
+    const fanBirthdays = JSON.parse(localStorage.getItem('fanBirthdays') || '[]');
+    fanBirthdays.splice(index, 1);
+    localStorage.setItem('fanBirthdays', JSON.stringify(fanBirthdays));
+    renderFanBirthdays();
+}
 
-        // 페이지 초기화 함수
-    function resetPage() {
-        location.reload(); // 페이지 새로고침
+// 팬 메모 리스트 렌더링 함수
+function renderFanMemos() {
+    const fanMemos = JSON.parse(localStorage.getItem('fanMemos') || '[]');
+    const fanMemoList = document.getElementById('fanMemoList');
+    fanMemoList.innerHTML = '';
+    fanMemos.forEach(({ nickname, memoContent }) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${nickname} <button onclick="openViewFanMemoModal('${nickname}', '${memoContent}')">보기</button> <button onclick="deleteFanMemo('${nickname}')">삭제</button>`;
+        fanMemoList.appendChild(li);
+    });
+}
+
+// 팬 메모 삭제 함수
+function deleteFanMemo(nickname) {
+    const fanMemos = JSON.parse(localStorage.getItem('fanMemos') || '[]');
+    const updatedFanMemos = fanMemos.filter(memo => memo.nickname !== nickname);
+    localStorage.setItem('fanMemos', JSON.stringify(updatedFanMemos));
+    renderFanMemos();
+}
+
+// 모든 모달을 닫는 함수
+function closeAllModals() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+    });
+}
+
+// 계산기 모달을 여는 함수
+function openCalculatorModal() {
+    document.getElementById('calculatorModal').style.display = 'block';
+}
+
+// 계산기 모달을 닫는 함수
+function closeCalculatorModal() {
+    document.getElementById('calculatorModal').style.display = 'none';
+}
+
+// 계산기 기능
+function appendCalc(value) {
+    const display = document.getElementById('calcDisplay');
+    display.value += value;
+}
+
+function clearCalc() {
+    document.getElementById('calcDisplay').value = '';
+}
+
+function calculate() {
+    const display = document.getElementById('calcDisplay');
+    try {
+        display.value = eval(display.value);
+    } catch (e) {
+        display.value = 'Error';
     }
+}
 
-
+// 페이지 로드 시 초기 렌더링
+document.addEventListener('DOMContentLoaded', () => {
+    renderFanBirthdays();
+    renderFanMemos();
+});
 </script>
 </body>
 </html>
