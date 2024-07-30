@@ -1,1179 +1,656 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mission Board</title>
-<style>
-@font-face {
-    font-family: 'CustomFont';
-    src: url('https://raw.githubusercontent.com/yunrang2/upload/master/DNFBitBitv2.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* 스크롤 막기 */
-    position: relative;
-    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-    width: 100vw;
-    height: 100vh;
-    box-sizing: border-box;
-    font-family: 'CustomFont', sans-serif;
-}
-
-.container {
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    color: #fff;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    position: relative;
-    overflow: hidden;
-}
-
-.row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.text-group-container {
-    margin-bottom: 0px;
-}
-
-.text-group {
-    display: flex;
-    justify-content: space-between; /* 왼쪽 텍스트와 오른쪽 텍스트 사이에 공간 배분 */
-    width: 100%; /* 전체 너비 사용 */
-}
-
-.left-text,
-.right-text {
-    margin: 0;
-    margin-bottom: 2px;
-    transition: color 0.3s ease;
-}
-
-.left-text,
-.right-text,
-.special-text {
-    font-size: 48px;
-    font-weight: bold;
-    padding: 5px 10px;
-    box-sizing: border-box;
-    position: relative;
-    line-height: 1;
-    display: inline-block;
-    color: #fff;
-    -webkit-text-stroke: 1px black;
-    cursor: pointer;
-    margin-bottom: 5px;
-    transition: color 0.3s ease, text-shadow 0.3s ease; /* 컬러 변화와 음영 효과 추가 */
-    font-family: 'CustomFont', sans-serif;
-}
-
-.left-text:hover,
-.special-text:hover {
-    color: #ffcc00; /* 호버 시 텍스트 색상 변경 */
-    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6); /* 호버 시 텍스트 음영 효과 */
-}
-
-.right-text {
-    color: #ff63dd; /* 원래 색상 */
-    text-align: right; /* 오른쪽 정렬 */
-}
-
-.right-text:hover {
-    color: #ffcc00; /* 호버 시 텍스트 색상 변경 */
-    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6); /* 호버 시 텍스트 음영 효과 */
-}
-
-.yellow-text {
-    color: yellow;
-    text-align: left;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-size: 50px;
-    margin-left: 80px;
-    text-shadow:
-        6px 0px 0 rgba(0, 0, 0, 0.5),
-        -1px -1px 0 rgba(0, 0, 0, 0.5),
-        1px -1px 0 rgba(0, 0, 0, 0.5),
-        -1px 1px 0 rgba(0, 0, 0, 0.5),
-        1px 1px 0 rgba(0, 0, 0, 0.5);
-    transition: color 0.3s ease, text-shadow 0.3s ease; /* 컬러 변화와 음영 효과 추가 */
-    font-family: 'CustomFont', sans-serif;
-}
-
-.yellow-text:hover {
-    color: #ffcc00; /* 호버 시 텍스트 색상 변경 */
-    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6); /* 호버 시 텍스트 음영 효과 */
-}
-
-.button-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    margin-top: 10px;
-    gap: 5px;
-}
-
-.button {
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 40px;
-    cursor: pointer;
-    width: auto;
-    max-width: 200px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: 'CustomFont', sans-serif;
-}
-
-.button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
-
-.disco-light {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: #fff;
-    border-radius: 50%;
-    animation: blink 1s infinite alternate;
-}
-
-#buttonContainer {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-}
-
-.chicken-img {
-    position: absolute;
-    bottom: 0;
-    width: 300px;
-    animation: dance 2s infinite alternate;
-}
-
-.chicken-img.left {
-    left: 20px;
-}
-
-.chicken-img.right {
-    right: 20px;
-}
-
-@keyframes dance {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-20px); }
-}
-
-.bg-music {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-}
-
-#bgMusicButton {
-    position: fixed;
-    bottom: 120px;
-    right: 20px;
-    cursor: pointer;
-    z-index: 1000;
-}
-
-#bgMusicButton img {
-    width: 200px;
-    height: auto;
-    display: block;
-    border: none;
-    outline: none;
-}
-
-#bgMusicButton:hover {
-    opacity: 0.8;
-}
-
-#goBackButton {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-}
-
-.timer-container {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 1);
-    border: 2px solid #000;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 48px;
-    z-index: 1001;
-    animation: pulse 1s infinite alternate;
-    font-family: 'CustomFont', sans-serif;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(1.1);
-    }
-}
-
-@keyframes heartbeat {
-    from {
-        transform: scale(1);
-    }
-    to {
-        transform: scale(1.1);
-    }
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #6a0dad;
-    z-index: 1;
-    width: 80%;
-    max-width: 500px;
-    background-color: #fefefe;
-    padding: 20px;
-    border: 1px solid #888;
-    border-radius: 20px;
-    font-family: 'CustomFont', sans-serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 24px; /* 폰트 크기 통일 */
-}
-
-.modal-content {
-    background-color: #fefefe;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: left;
-    font-size: 24px; /* 폰트 크기 통일 */
-}
-
-.modal-content p {
-    color: black;
-}
-
-.close {
-    position: absolute;
-    float: right;
-    top: 1px;
-    right: 5px;
-    cursor: pointer;
-    font-size: 36px;
-    font-weight: bold;
-    color: black;
-    background-color: #ffffff;
-    border: 2px solid #000000;
-    font-family: 'CustomFont', sans-serif;
-}
-
-.close:hover,
-.close:focus {
-    background-color: rgb(38, 0, 255);
-    color: rgb(255, 0, 0);
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.button-container-vertical {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.button-bg-music {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 24px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-family: 'CustomFont', sans-serif;
-}
-
-.button-bg-music:hover {
-    background-color: #2980b9;
-}
-
-#bgMusicModal.modal {
-    right: 0;
-    left: unset;
-    bottom: 20px;
-}
-
-.red-flash {
-    background-color: red;
-    animation: flash 1s infinite alternate;
-}
-
-@keyframes flash {
-    from { opacity: 1; }
-    to { opacity: 0; }
-}
-
-.error-message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: blue;
-    padding: 20px;
-    font-size: 36px;
-    color: white;
-    font-family: 'CustomFont', sans-serif;
-}
-
-.popup-image img {
-    display: none;
-}
-
-#memoButton {
-    position: fixed;
-    bottom: 250px; /* 브금 버튼 위에 위치 */
-    right: 20px;
-    cursor: pointer;
-    z-index: 1000;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 40px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: 'CustomFont', sans-serif;
-}
-
-#memoButton:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
-
-#calculatorButton {
-    position: fixed;
-    bottom: 350px; /* 메모 버튼 위에 위치 */
-    right: 20px;
-    cursor: pointer;
-    z-index: 1000;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 40px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: 'CustomFont', sans-serif;
-}
-
-#calculatorButton:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
-
-#memoModal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fefefe;
-    padding: 20px;
-    border: 1px solid #888;
-    border-radius: 20px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1001;
-    font-size: 24px; /* 폰트 크기 통일 */
-}
-
-#memoModal .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 36px;
-    font-weight: bold;
-    color: black;
-    background-color: #ffffff;
-    border: 2px solid #000000;
-}
-
-#memoModal .close:hover,
-#memoModal .close:focus {
-    background-color: rgb(38, 0, 255);
-    color: rgb(255, 0, 0);
-}
-
-#memoModal textarea {
-    width: 100%;
-    height: 300px;
-    padding: 10px;
-    font-size: 24px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 80px;
-    font-family: 'CustomFont', sans-serif;
-}
-
-#memoModal .button {
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: #fff;
-    border: none;
-    padding: 20px 40px;
-    border-radius: 10px;
-    font-size: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: 'CustomFont', sans-serif;
-}
-
-#memoModal .button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
-
-#clearMemoButton {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
-}
-
-#importantMemoButtonInModal {
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
-    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-    width: 260px;
-}
-
-.important-button {
-    position: fixed;
-    bottom: 120px;
-    right: 20px;
-    z-index: 1000;
-    cursor: pointer;
-    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 40px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: 'CustomFont', sans-serif;
-}
-
-.important-button:hover {
-    background-color: #e67e22;
-    transform: scale(1.05);
-}
-
-#importantMemoModal, #fanBirthdayModal, #fanMemoModal, #addFanBirthdayModal, #addFanMemoModal, #viewFanMemoModal, #calculatorModal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fefefe;
-    padding: 40px;
-    border: 1px solid #888;
-    border-radius: 20px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1001;
-    font-size: 24px; /* 폰트 크기 통일 */
-}
-
-#addFanBirthdayModal input, #addFanMemoModal input, #addFanMemoModal textarea {
-    width: 100%;
-    padding: 20px;
-    margin-bottom: 20px;
-    font-size: 24px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-family: 'CustomFont', sans-serif;
-}
-
-#fanBirthdayList, #fanMemoList {
-    list-style: none;
-    padding: 0;
-}
-
-#fanBirthdayList li, #fanMemoList li {
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'CustomFont', sans-serif;
-}
-
-#fanBirthdayList li button, #fanMemoList li button, #addFanBirthdayModal .button, #addFanMemoModal .button, #viewFanMemoModal .button {
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: #fff;
-    border: none;
-    padding: 20px 40px;
-    border-radius: 10px;
-    font-size: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: 'CustomFont', sans-serif;
-}
-
-#fanBirthdayList li button:hover, #fanMemoList li button:hover, #addFanBirthdayModal .button:hover, #addFanMemoModal .button:hover, #viewFanMemoModal .button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
-
-#calculator {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
-
-#calculator input {
-    grid-column: span 4;
-    padding: 20px;
-    font-size: 24px;
-    text-align: right;
-    box-sizing: border-box;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-family: 'CustomFont', sans-serif;
-}
-
-#calculator button {
-    padding: 20px;
-    font-size: 24px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: #fff;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    font-family: 'CustomFont', sans-serif;
-}
-
-#calculator button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1920x1080 화면</title>
+    <style>
+        @font-face {
+            font-family: 'DNFBitBit';
+            src: url('https://raw.githubusercontent.com/yunrang2/upload/master/DNFBitBitv2.ttf') format('truetype');
+        }
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #00FF00; /* 크로마키 녹색 */
+            height: 100vh;
+            overflow: hidden; /* 스크롤 방지 */
+            font-family: 'DNFBitBit', Arial, sans-serif;
+        }
+        .canvas {
+            position: relative;
+            width: 1920px;
+            height: 1080px;
+            background-color: #00FF00; /* 동일한 크로마키 녹색 */
+        }
+        .top-left {
+            position: absolute;
+            top: 33px;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .top-left img {
+            width: 420px;
+            height: auto;
+            cursor: pointer;
+        }
+        .button-row {
+            display: flex;
+            justify-content: space-between; /* 버튼 간격을 동일하게 조정 */
+            margin-top: 5px;
+            width: 420px; /* 버튼 행의 너비를 이미지와 맞춤 */
+        }
+        .button-row button {
+            background-color: #1E90FF; /* 왼쪽 버튼 색상 */
+            border: 2px solid #FF1493; /* 진한 분홍색 테두리 */
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            font-size: 18px;
+            margin: 5px 0;
+            cursor: pointer;
+            width: 33%; /* 각 버튼의 너비를 1/3로 설정 */
+            font-family: 'DNFBitBit', Arial, sans-serif;
+            box-shadow: 0 4px #666;
+            border-radius: 5px;
+            transition: transform 0.2s ease;
+            text-shadow: 1px 1px 1px #000;
+        }
+        .button-row button:hover {
+            transform: translateY(-4px);
+        }
+        .button-row button span {
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+        }
+        .bottom-right {
+            position: absolute;
+            bottom: 33px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .bottom-right button {
+            background-color: #FFB6C1; /* 밝은 분홍색 */
+            border: 2px solid #FFB6C1; /* 밝은 분홍색 테두리 */
+            color: white;
+            padding: 22px 33px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            font-size: 27px;
+            margin: 11px 0;
+            cursor: pointer;
+            width: 210px;
+            font-family: 'DNFBitBit', Arial, sans-serif;
+            box-shadow: 0 4px #666;
+            border-radius: 11px;
+            transition: width 0.3s ease, transform 0.2s ease;
+            position: relative;
+            white-space: nowrap;
+            text-shadow: 1px 1px 1px #000;
+        }
+        .bottom-right button:hover {
+            width: 345px;
+        }
+        .bottom-right button span {
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+        }
+        .dynamic-buttons {
+            position: absolute;
+            top: 33px;
+            right: 33px;
+            display: none;
+            flex-direction: column;
+            align-items: flex-end;
+            z-index: 1000;
+        }
+        .dynamic-buttons .button-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+        .dynamic-buttons button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'DNFBitBit', Arial, sans-serif;
+            text-shadow: 1px 1px 1px #000;
+        }
+        .dynamic-buttons .bgm-button {
+            background-color: #D2691E; /* 자두색 */
+            color: white;
+        }
+        .dynamic-buttons .reaction-button {
+            background-color: #D2691E; /* 자두색 */
+            color: white;
+        }
+        .dynamic-buttons .stop-button {
+            background-color: red;
+            color: white;
+        }
+        .dynamic-buttons .close-button {
+            background-color: #FF4500;
+            color: white;
+        }
+        .return-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF4500;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            font-family: 'DNFBitBit', Arial, sans-serif;
+            text-shadow: 1px 1px 1px #000;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            background-color: white;
+            border: 2px solid #666;
+            box-shadow: 0 4px 11px rgba(0,0,0,0.2);
+            border-radius: 11px;
+            padding: 22px;
+            z-index: 1000;
+            font-family: 'DNFBitBit', Arial, sans-serif;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .modal.active {
+            display: block;
+        }
+        .modal button {
+            background-color: #1E90FF; /* 파란색 */
+            border: none;
+            color: white;
+            padding: 11px 22px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            font-size: 22px;
+            margin: 11px auto;
+            cursor: pointer;
+            width: 120px;
+            font-family: 'DNFBitBit', Arial, sans-serif;
+            box-shadow: 0 4px #666;
+            border-radius: 11px;
+            transition: transform 0.2s ease;
+            text-shadow: 1px 1px 1px #000;
+        }
+        .modal button.stop-button {
+            background-color: red; /* 중지 버튼 빨간색 */
+        }
+        .modal button.close-button {
+            background-color: #FF4500; /* 닫기 버튼 주황색 */
+        }
+        .modal button:hover {
+            transform: translateY(-4px);
+        }
+        .modal button span {
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+        }
+        .modal input[type="number"] {
+            width: 60px; /* 입력창 너비 */
+            height: 40px; /* 입력창 높이 */
+            font-size: 18px;
+            text-align: center;
+            margin-right: 5px;
+        }
+        .modal label {
+            display: inline-block;
+            width: auto;
+        }
+        .timer-box {
+            display: none;
+            position: fixed;
+            background-color: white;
+            border: 2px solid #000;
+            padding: 22px;
+            font-size: 44px;
+            font-family: 'DNFBitBit', Arial, sans-serif;
+            text-align: center;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        .timer-box.vibrate {
+            animation: vibrate 0.1s infinite;
+        }
+        @keyframes vibrate {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            50% { transform: translateX(2px); }
+            75% { transform: translateX(-2px); }
+            100% { transform: translateX(2px); }
+        }
+        .modal-title {
+            color: #FF69B4;
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px #000;
+            -webkit-text-stroke: 0.5px black; /* 얇은 테두리 추가 */
+        }
+        .modal-content {
+            font-size: 24px;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .modal-content .heart {
+            color: red;
+        }
+        .disco-light {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: blink 1s infinite alternate;
+        }
+        .chicken-img {
+            position: absolute;
+            width: 300px;
+            animation: dance 2s infinite alternate;
+        }
+        .chicken-img.left {
+            bottom: 0;
+            left: 20px;
+        }
+        .chicken-img.right {
+            bottom: 0;
+            right: 20px;
+            transform: scaleX(-1); /* 좌우반전 */
+        }
+        @keyframes dance {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+    <script>
+        let timers = [];
+        let timerPositions = [
+            { top: '33px', left: '30%' },
+            { top: '33px', left: '50%' },
+            { top: '33px', left: '70%' }
+        ];
+        let currentPosition = 0;
+        let currentAudio = null;
+        let contentVisible = true;
+        let bgMusic = null;
+
+        function toggleModal(modalId) {
+            removeDynamicButtons();
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (modal.id !== modalId) {
+                    modal.classList.remove('active');
+                }
+            });
+            const modal = document.getElementById(modalId);
+            modal.classList.toggle('active');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+        }
+
+        function showDynamicButtons(type) {
+            const existingContainer = document.getElementById('dynamic-buttons');
+            if (existingContainer && existingContainer.dataset.type === type) {
+                existingContainer.remove();
+                return;
+            }
+
+            removeDynamicButtons();
+            closeModal('profile-modal');
+            closeModal('schedule-modal');
+            closeModal('signature-modal');
+            closeModal('custom-timer-modal');
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.className = 'dynamic-buttons';
+            buttonContainer.id = 'dynamic-buttons';
+            buttonContainer.dataset.type = type;
+
+            let buttons = [];
+            if (type === 'bgm') {
+                buttons = [
+                    { text: '섹시', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/섹시.mp3' },
+                    { text: '불쌍', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/불쌍.mp3' },
+                    { text: '게임', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/게임.mp3' },
+                    { text: '원투', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/원투.mp3' },
+                    { text: '코난', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/코난등장.mp3' },
+                    { text: '황당', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/황당.mp3' },
+                    { text: '멸망', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/멸망.mp3' },
+                    { text: '반야심경', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/반야심경리믹스.mp3' },
+                    { text: '중지', action: stopAudio }
+                ];
+            } else if (type === 'reaction') {
+                buttons = [
+                    { text: '사쿠란보', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/사쿠란보.mp3' },
+                    { text: '마라탕후루', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/마라탕후루.mp3' },
+                    { text: '솜사탕', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/솜사탕.mp3' },
+                    { text: '제로투', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/제로투.mp3' },
+                    { text: '코카인', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/코카인.mp3' },
+                    { text: '제로콕', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/제로콕.mp3' },
+                    { text: '여봉봉', audio: 'https://raw.githubusercontent.com/yunrang2/upload/master/여봉봉.mp3' },
+                    { text: 'ㄲㄲ', action: startBbuAeSequence, className: 'reaction-button' },
+                    { text: '중지', action: stopAudio }
+                ];
+            } else if (type === 'timer') {
+                buttons = [
+                    { text: '30초', action: () => createTimer(30) },
+                    { text: '1분', action: () => createTimer(60) },
+                    { text: '10분', action: () => createTimer(600) },
+                    { text: '직접 설정', action: openCustomTimerModal }
+                ];
+            }
+
+            buttons.forEach((btn, index) => {
+                const button = document.createElement('button');
+                button.className = btn.className || (type === 'bgm' ? 'bgm-button' : 'reaction-button');
+                button.innerText = btn.text;
+                if (btn.audio) {
+                    button.onclick = () => playAudio(btn.audio);
+                } else if (btn.action) {
+                    button.onclick = btn.action;
+                    button.className += ' stop-button';
+                }
+
+                if (index % 2 === 0) {
+                    const row = document.createElement('div');
+                    row.className = 'button-row';
+                    buttonContainer.appendChild(row);
+                    row.appendChild(button);
+                } else {
+                    buttonContainer.lastChild.appendChild(button);
+                }
+            });
+
+            const closeButton = document.createElement('button');
+            closeButton.className = 'close-button';
+            closeButton.innerText = '닫기';
+            closeButton.onclick = removeDynamicButtons;
+            buttonContainer.appendChild(closeButton);
+
+            document.body.appendChild(buttonContainer);
+            buttonContainer.style.display = 'flex';
+        }
+
+        function removeDynamicButtons() {
+            const existingContainer = document.getElementById('dynamic-buttons');
+            if (existingContainer) {
+                existingContainer.remove();
+            }
+        }
+
+        function toggleContentVisibility() {
+            const elements = document.querySelectorAll('.top-left, .bottom-right, .modal, .dynamic-buttons');
+            elements.forEach(element => {
+                element.style.display = contentVisible ? 'none' : '';
+            });
+            document.getElementById('return-button').style.display = contentVisible ? 'block' : 'none';
+            contentVisible = !contentVisible;
+
+            if (!contentVisible) {
+                stopAudio();
+                removeDynamicElements();
+            }
+        }
+
+        function createTimer(duration) {
+            let timer = timers.find(t => t.duration === duration);
+            if (timer) {
+                timer.remaining += duration;
+                timer.element.textContent = formatTime(timer.remaining);
+                return;
+            }
+
+            let timerBox = document.createElement('div');
+            timerBox.className = 'timer-box';
+            timerBox.dataset.duration = duration;
+            timerBox.style.top = timerPositions[currentPosition].top;
+            timerBox.style.left = timerPositions[currentPosition].left;
+            document.body.appendChild(timerBox);
+            currentPosition = (currentPosition + 1) % timerPositions.length;
+
+            timerBox.style.display = 'block';
+            timerBox.textContent = formatTime(duration);
+
+            timer = {
+                element: timerBox,
+                duration: duration,
+                remaining: duration,
+                interval: null,
+                active: true
+            };
+            timers.push(timer);
+
+            timerBox.onclick = () => {
+                if (timer.active) {
+                    clearInterval(timer.interval);
+                } else {
+                    startTimer(timer);
+                }
+                timer.active = !timer.active;
+            };
+
+            startTimer(timer);
+        }
+
+        function startTimer(timer) {
+            if (timer.interval) {
+                clearInterval(timer.interval);
+            }
+            timer.interval = setInterval(() => {
+                if (timer.remaining > 0) {
+                    timer.remaining--;
+                    timer.element.textContent = formatTime(timer.remaining);
+
+                    if (timer.remaining <= 5) {
+                        timer.element.classList.add('vibrate');
+                        timer.element.style.backgroundColor = timer.remaining % 2 === 0 ? 'red' : 'white';
+                    } else {
+                        timer.element.classList.remove('vibrate');
+                        timer.element.style.backgroundColor = 'white';
+                    }
+                } else {
+                    clearInterval(timer.interval);
+                    timer.element.style.display = 'none';
+                }
+            }, 1000);
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        function playAudio(src) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            currentAudio = new Audio(src);
+            currentAudio.volume = 0.8;
+            currentAudio.play();
+        }
+
+        function stopAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                currentAudio = null;
+            }
+            if (bgMusic) {
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
+                bgMusic = null;
+            }
+        }
+
+        function hideContent() {
+            const elements = document.querySelectorAll(".top-left, .bottom-right, .modal, .dynamic-buttons");
+            elements.forEach(element => element.style.display = "none");
+            document.getElementById("return-button").style.display = "block";
+        }
+
+        function startBbuAeSequence() {
+            hideContent();
+
+            const container = document.querySelector('.canvas');
+            if (!container) {
+                console.error('Error: Cannot find .canvas element.');
+                return;
+            }
+
+            bgMusic = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/닭춤.mp3');
+            bgMusic.loop = true;
+            bgMusic.play();
+
+            const leftChickenImg = document.createElement('img');
+            leftChickenImg.src = 'https://raw.githubusercontent.com/yunrang2/upload/master/dancing-chicken-ezgif.com-crop.gif';
+            leftChickenImg.classList.add('chicken-img', 'left');
+            container.appendChild(leftChickenImg);
+
+            const rightChickenImg = leftChickenImg.cloneNode(true);
+            rightChickenImg.classList.remove('left');
+            rightChickenImg.classList.add('right');
+            container.appendChild(rightChickenImg);
+
+            document.getElementById('return-button').style.display = 'block';
+        }
+
+        function removeDynamicElements() {
+            const lights = document.querySelectorAll('.disco-light');
+            const chickens = document.querySelectorAll('.chicken-img');
+
+            lights.forEach(light => light.remove());
+            chickens.forEach(chicken => chicken.remove());
+        }
+
+        function randomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function openCustomTimerModal() {
+            const modal = document.getElementById('custom-timer-modal');
+            modal.classList.add('active');
+        }
+
+        function setCustomTimer() {
+            const minutes = parseInt(document.getElementById('custom-minutes').value, 10) || 0;
+            const seconds = parseInt(document.getElementById('custom-seconds').value, 10) || 0;
+            const totalSeconds = (minutes * 60) + seconds;
+
+            if (totalSeconds > 0) {
+                createTimer(totalSeconds);
+                closeModal('custom-timer-modal');
+            }
+        }
+
+        function resetToInitialState() {
+            stopAudio();
+            removeDynamicElements();
+            contentVisible = false;
+            toggleContentVisibility();
+        }
+    </script>
 </head>
 <body>
-<div class="container">
-    <div class="text-group-container">
-        <div class="row">
-            <div class="text-group">
-                <div class="left-text">
-                    <span class="left-text" onclick="startHeartbeatEffect('heart1')">짤콘리액션</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect('heart2')">마음열개</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect('heart3')">배꼽인사</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect('heart4')">하이킥</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect(this)">지진쿵</span><br>
-                    <span class="special-text" onclick="startTimer(30)">아봉30초</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect(this)">입뿅</span><br>
-                    <span class="special-text" onclick="toggleEffects()">ㄲㄲ</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect(this)">애교</span><br>
-                    <span class="special-text" onclick="startTimer(600)">얼낙10분</span><br>
-                    <span class="special-text" onclick="startTimer(60)">가방속1분</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect(this)">율동</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect(this)">댄스</span><br>
-                    <span class="special-text" onclick="startTimer(1800)">연장30분</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect(this)">폭풍ㅅㅅ</span><br>
-                    <span class="left-text" onclick="playMusicAndLights()">108배</span><br>
-                    <span class="left-text" onclick="startHeartbeatEffect(this)">방종</span><br>
-                </div>
-                <div class="right-text">
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">1</span>~9<span class="heart" style="color: #ff0000;">♥</span><br>
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">10<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">15<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">17<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">19<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="special-text" style="color: #ff63dd;" onclick="startTimer(30)">30<span class="heart" style="color: #ff0000;">♥</span></span><br> 
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">33<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="special-text" style="color: #ff63dd;">55<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">59<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="special-text" style="color: #ff63dd;" onclick="startTimer(600)">69<span class="heart" style="color: #ff0000;">♥</span></span><br> 
-                    <span class="special-text" style="color: #ff63dd;" onclick="startTimer(60)">85<span class="heart" style="color: #ff0000;">♥</span></span><br> 
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">88<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">200<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="special-text" style="color: #ff63dd;" onclick="startTimer(1800)">향수<span class="heart" style="color: #ff0000;">♥</span></span><br> 
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">1414<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">2024<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                    <span class="right-text" onclick="startHeartbeatEffect(this)">12486<span class="heart" style="color: #ff0000;">♥</span></span><br>
-                </div>
+    <div class="canvas">
+        <div class="top-left">
+            <img src="https://raw.githubusercontent.com/yunrang2/upload/master/다원누나%20미션판.png" alt="미션판" onclick="toggleContentVisibility()">
+            <div class="button-row">
+                <button id="profile-btn" onclick="toggleModal('profile-modal')"><span>프로필</span></button>
+                <button id="schedule-btn" onclick="toggleModal('schedule-modal')"><span>방송시간</span></button>
+                <button id="signature-btn" onclick="toggleModal('signature-modal')"><span>시그니처</span></button>
             </div>
         </div>
-        <div class="yellow-text">모든 미션 실드 +1</div>
-        <div class="button-container">
-            <div class="button" onclick="openModal('profile')">프로필</div>
-            <div class="button" onclick="openModal('broadcast')">방송시간</div>
-            <div class="button" onclick="openModal('signature')">시그니처</div>
+        <div class="bottom-right">
+            <button id="timer-btn" onclick="showDynamicButtons('timer')"><span>타이머</span></button>
+            <button id="bgm-btn" onclick="showDynamicButtons('bgm')"><span>브금</span></button>
+            <button id="reaction-btn" onclick="showDynamicButtons('reaction')"><span>리액션</span></button>
+            <button id="standby-btn" onclick="showStandbyScreen()"><span>대기화면</span></button>
+        </div>
+        <button id="return-button" class="return-button" onclick="resetToInitialState()">돌아가기</button>
+        <div id="profile-modal" class="modal">
+            <div class="modal-title">BJ다원잉♥</div>
+            <div class="modal-content">나이: 87년생</div>
+            <div class="modal-content">지역: 인천</div>
+            <div class="modal-content">키: 162cm</div>
+            <div class="modal-content">몸무게: top secret!</div>
+            <div class="modal-content">미드: C컵같은 E컵</div>
+            <button class="close-button" onclick="closeModal('profile-modal')"><span>닫기</span></button>
+        </div>
+        <div id="schedule-modal" class="modal">
+            <div class="modal-title">방송시간</div>
+            <div class="modal-content" style="color: black; text-align: center;">월~금 오후 5시 ~ 저녁 9시</div>
+            <div class="modal-content" style="color: #ff0000; text-align: center;">랜덤 휴방</div>
+            <div class="modal-content" style="color: black; text-align: center;">(방송시간은 지맘대로 바뀔수 있음)</div>
+            <button class="close-button" onclick="closeModal('schedule-modal')"><span>닫기</span></button>
+        </div>
+        <div id="signature-modal" class="modal">
+            <div class="modal-title">다원잉♥ 시그니처<span class="heart">♥</span></div>
+            <img src="https://raw.githubusercontent.com/yunrang2/upload/master/다원누나시그.gif" style="display: block; margin: auto; max-width: 400px;">
+            <div class="modal-content">51<span class="heart">♥</span> 151<span class="heart">♥</span> 512<span class="heart">♥</span> 1051<span class="heart">♥</span> 2851<span class="heart">♥</span></div>
+            <div class="modal-content" style="font-size: 60px; color: #ff0000;">응원 시그니처</div>
+            <div class="modal-content">280<span class="heart">♥</span> 282<span class="heart">♥</span> 283<span class="heart">♥</span> 285<span class="heart">♥</span> 286<span class="heart">♥</span> 289<span class="heart">♥</span> 486<span class="heart">♥</span></div>
+            <button class="close-button" onclick="closeModal('signature-modal')"><span>닫기</span></button>
+        </div>
+        <div id="custom-timer-modal" class="modal">
+            <div class="modal-title">타이머 설정</div>
+            <div class="modal-content">
+                <input type="number" id="custom-minutes" name="minutes" min="0" style="font-size: 18px;">
+                <label for="custom-minutes">분</label>
+            </div>
+            <div class="modal-content">
+                <input type="number" id="custom-seconds" name="seconds" min="0" style="font-size: 18px;">
+                <label for="custom-seconds">초</label>
+            </div>
+            <button onclick="setCustomTimer()"><span>설정</span></button>
+            <button class="close-button" onclick="closeModal('custom-timer-modal')"><span>닫기</span></button>
         </div>
     </div>
-    <div id="popup" class="popup-image" onclick="triggerScarySequence()" style="position: fixed; top: 20px; right: 20px; width: 200px; height: 200px;">
-        <img src="https://raw.githubusercontent.com/yunrang2/upload/master/누르면안댐.png" alt="누르면안되는이미지" style="width: 100%; height: 100%; border: none;">
-    </div>
-
-    <div id="myModal" class="modal"></div>
-
-    <div class="button-container" id="buttonContainer" style="display: none;">
-        <div class="button" id="goBackButton" onclick="goBack()">←돌아가기</div>
-    </div>
-</div>
-<audio id="bgMusic" loop class="bg-music">
-    <source src="https://raw.githubusercontent.com/yunrang2/upload/master/닭춤.mp3" type="audio/mp3">
-</audio>
-<div id="bgMusicButton" class="button" onclick="openModal('bgMusic')">
-    <img src="https://raw.githubusercontent.com/yunrang2/upload/master/브금-cutout.png" alt="브금" style="border: none;">
-</div>
-
-<!-- 메모 버튼 및 모달 -->
-<div id="memoButton" class="button" onclick="openMemoModal()">메모</div>
-<div id="calculatorButton" class="button" onclick="openCalculatorModal()">계산기</div>
-
-<div id="memoModal" class="modal">
-    <div class="close" onclick="closeMemoModal()">×</div>
-    <textarea id="memoContent" placeholder="메모를 작성하세요..."></textarea>
-    <button id="clearMemoButton" class="button" onclick="clearMemo()">클리어</button>
-    <button id="importantMemoButtonInModal" class="button" onclick="openImportantMemoModal()">중요메모</button>
-</div>
-
-<!-- 중요 메모 모달 -->
-<div id="importantMemoModal" class="modal">
-    <div class="close" onclick="closeImportantMemoModal()">×</div>
-    <div class="button-container-vertical">
-        <button class="button-bg-music" onclick="openFanBirthdayModal()">팬 생일</button>
-        <button class="button-bg-music" onclick="openFanMemoModal()">팬 메모</button>
-    </div>
-</div>
-
-<!-- 팬 생일 모달 -->
-<div id="fanBirthdayModal" class="modal">
-    <div class="close" onclick="closeFanBirthdayModal()">×</div>
-    <div>
-        <button class="button" onclick="openAddFanBirthdayModal()">추가</button>
-    </div>
-    <ul id="fanBirthdayList"></ul>
-</div>
-
-<!-- 팬 메모 모달 -->
-<div id="fanMemoModal" class="modal">
-    <div class="close" onclick="closeFanMemoModal()">×</div>
-    <div>
-        <button class="button" onclick="openAddFanMemoModal()">추가</button>
-    </div>
-    <ul id="fanMemoList"></ul>
-</div>
-
-<!-- 팬 생일 추가 모달 -->
-<div id="addFanBirthdayModal" class="modal">
-    <div class="close" onclick="closeAddFanBirthdayModal()">×</div>
-    <input type="text" id="fanNickname" placeholder="닉네임">
-    <input type="date" id="fanBirthday">
-    <button class="button" onclick="saveFanBirthday()">저장</button>
-</div>
-
-<!-- 팬 메모 추가 모달 -->
-<div id="addFanMemoModal" class="modal">
-    <div class="close" onclick="closeAddFanMemoModal()">×</div>
-    <input type="text" id="fanMemoNickname" placeholder="닉네임">
-    <textarea id="fanMemoContent" placeholder="메모를 작성하세요..."></textarea>
-    <button class="button" onclick="saveFanMemo()">저장</button>
-</div>
-
-<!-- 팬 메모 보기 모달 -->
-<div id="viewFanMemoModal" class="modal">
-    <div class="close" onclick="closeViewFanMemoModal()">×</div>
-    <div id="viewFanMemoContent"></div>
-</div>
-
-<!-- 계산기 모달 -->
-<div id="calculatorModal" class="modal">
-    <div class="close" onclick="closeCalculatorModal()">×</div>
-    <div id="calculator">
-        <input type="text" id="calcDisplay" readonly>
-        <button onclick="clearCalc()">C</button>
-        <button onclick="appendCalc('/')">/</button>
-        <button onclick="appendCalc('*')">*</button>
-        <button onclick="appendCalc('-')">-</button>
-        <button onclick="appendCalc('7')">7</button>
-        <button onclick="appendCalc('8')">8</button>
-        <button onclick="appendCalc('9')">9</button>
-        <button onclick="appendCalc('+')">+</button>
-        <button onclick="appendCalc('4')">4</button>
-        <button onclick="appendCalc('5')">5</button>
-        <button onclick="appendCalc('6')">6</button>
-        <button onclick="calculate()">=</button>
-        <button onclick="appendCalc('1')">1</button>
-        <button onclick="appendCalc('2')">2</button>
-        <button onclick="appendCalc('3')">3</button>
-        <button onclick="appendCalc('0')">0</button>
-    </div>
-</div>
-
-<script>
-// 메모 모달을 여는 함수
-function openMemoModal() {
-    const memoContent = localStorage.getItem('memo') || '';
-    document.getElementById('memoContent').value = memoContent;
-    document.getElementById('memoModal').style.display = 'block';
-}
-
-// 메모 모달을 닫는 함수
-function closeMemoModal() {
-    const memoContent = document.getElementById('memoContent').value;
-    localStorage.setItem('memo', memoContent);
-    document.getElementById('memoModal').style.display = 'none';
-}
-
-// 메모 내용을 지우는 함수
-function clearMemo() {
-    document.getElementById('memoContent').value = '';
-}
-
-// 중요 메모 모달을 여는 함수
-function openImportantMemoModal() {
-    document.getElementById('memoModal').style.display = 'none';
-    document.getElementById('importantMemoModal').style.display = 'block';
-}
-
-// 중요 메모 모달을 닫는 함수
-function closeImportantMemoModal() {
-    document.getElementById('importantMemoModal').style.display = 'none';
-}
-
-// 팬 생일 모달을 여는 함수
-function openFanBirthdayModal() {
-    closeAllModals();
-    document.getElementById('fanBirthdayModal').style.display = 'block';
-}
-
-// 팬 생일 모달을 닫는 함수
-function closeFanBirthdayModal() {
-    document.getElementById('fanBirthdayModal').style.display = 'none';
-}
-
-// 팬 메모 모달을 여는 함수
-function openFanMemoModal() {
-    closeAllModals();
-    document.getElementById('fanMemoModal').style.display = 'block';
-}
-
-// 팬 메모 모달을 닫는 함수
-function closeFanMemoModal() {
-    document.getElementById('fanMemoModal').style.display = 'none';
-}
-
-// 팬 생일 추가 모달을 여는 함수
-function openAddFanBirthdayModal() {
-    closeAllModals();
-    document.getElementById('addFanBirthdayModal').style.display = 'block';
-}
-
-// 팬 생일 추가 모달을 닫는 함수
-function closeAddFanBirthdayModal() {
-    document.getElementById('addFanBirthdayModal').style.display = 'none';
-}
-
-// 팬 메모 추가 모달을 여는 함수
-function openAddFanMemoModal() {
-    closeAllModals();
-    document.getElementById('addFanMemoModal').style.display = 'block';
-}
-
-// 팬 메모 추가 모달을 닫는 함수
-function closeAddFanMemoModal() {
-    document.getElementById('addFanMemoModal').style.display = 'none';
-}
-
-// 팬 메모 보기 모달을 여는 함수
-function openViewFanMemoModal(nickname, memoContent) {
-    closeAllModals();
-    document.getElementById('viewFanMemoContent').innerText = memoContent;
-    document.getElementById('viewFanMemoModal').dataset.nickname = nickname;
-    document.getElementById('viewFanMemoModal').style.display = 'block';
-}
-
-// 팬 메모 보기 모달을 닫는 함수
-function closeViewFanMemoModal() {
-    document.getElementById('viewFanMemoModal').style.display = 'none';
-}
-
-// 팬 생일 저장 함수
-function saveFanBirthday() {
-    const nickname = document.getElementById('fanNickname').value;
-    const birthday = document.getElementById('fanBirthday').value;
-    if (nickname && birthday) {
-        const fanBirthdays = JSON.parse(localStorage.getItem('fanBirthdays') || '[]');
-        fanBirthdays.push({ nickname, birthday });
-        localStorage.setItem('fanBirthdays', JSON.stringify(fanBirthdays));
-        renderFanBirthdays();
-        closeAddFanBirthdayModal();
-    }
-}
-
-// 팬 메모 저장 함수
-function saveFanMemo() {
-    const nickname = document.getElementById('fanMemoNickname').value;
-    const memoContent = document.getElementById('fanMemoContent').value;
-    if (nickname && memoContent) {
-        const fanMemos = JSON.parse(localStorage.getItem('fanMemos') || '[]');
-        fanMemos.push({ nickname, memoContent });
-        localStorage.setItem('fanMemos', JSON.stringify(fanMemos));
-        renderFanMemos();
-        closeAddFanMemoModal();
-    }
-}
-
-// 팬 생일 리스트 렌더링 함수
-function renderFanBirthdays() {
-    const fanBirthdays = JSON.parse(localStorage.getItem('fanBirthdays') || '[]');
-    const fanBirthdayList = document.getElementById('fanBirthdayList');
-    fanBirthdayList.innerHTML = '';
-    fanBirthdays.forEach(({ nickname, birthday }, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `${nickname} - ${birthday} <button onclick="deleteFanBirthday(${index})">삭제</button>`;
-        fanBirthdayList.appendChild(li);
-    });
-}
-
-// 팬 생일 삭제 함수
-function deleteFanBirthday(index) {
-    const fanBirthdays = JSON.parse(localStorage.getItem('fanBirthdays') || '[]');
-    fanBirthdays.splice(index, 1);
-    localStorage.setItem('fanBirthdays', JSON.stringify(fanBirthdays));
-    renderFanBirthdays();
-}
-
-// 팬 메모 리스트 렌더링 함수
-function renderFanMemos() {
-    const fanMemos = JSON.parse(localStorage.getItem('fanMemos') || '[]');
-    const fanMemoList = document.getElementById('fanMemoList');
-    fanMemoList.innerHTML = '';
-    fanMemos.forEach(({ nickname, memoContent }) => {
-        const li = document.createElement('li');
-        li.innerHTML = `${nickname} <button onclick="openViewFanMemoModal('${nickname}', '${memoContent}')">보기</button> <button onclick="deleteFanMemo('${nickname}')">삭제</button>`;
-        fanMemoList.appendChild(li);
-    });
-}
-
-// 팬 메모 삭제 함수
-function deleteFanMemo(nickname) {
-    const fanMemos = JSON.parse(localStorage.getItem('fanMemos') || '[]');
-    const updatedFanMemos = fanMemos.filter(memo => memo.nickname !== nickname);
-    localStorage.setItem('fanMemos', JSON.stringify(updatedFanMemos));
-    renderFanMemos();
-}
-
-// 모든 모달을 닫는 함수
-function closeAllModals() {
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.style.display = 'none';
-    });
-}
-
-// 계산기 모달을 여는 함수
-function openCalculatorModal() {
-    document.getElementById('calculatorModal').style.display = 'block';
-}
-
-// 계산기 모달을 닫는 함수
-function closeCalculatorModal() {
-    document.getElementById('calculatorModal').style.display = 'none';
-}
-
-// 계산기 기능
-function appendCalc(value) {
-    const display = document.getElementById('calcDisplay');
-    display.value += value;
-}
-
-function clearCalc() {
-    document.getElementById('calcDisplay').value = '';
-}
-
-function calculate() {
-    const display = document.getElementById('calcDisplay');
-    try {
-        display.value = eval(display.value);
-    } catch (e) {
-        display.value = 'Error';
-    }
-}
-
-// 모달 열기 함수
-function openModal(type) {
-    let modalContent = `
-        <div class="modal-content">
-            <div class="close" onclick="closeModal()">×</div>`;
-            
-    if (type === 'profile') {
-        modalContent += `
-            <p>나이: 87년생</p>
-            <p>지역: 인천</p>
-            <p>키: 162cm</p>
-            <p>몸무게: top secret!</p>
-            <p>미드: C컵같은 E컵</p>`;
-    } else if (type === 'broadcast') {
-        modalContent += `
-            <p style="color: black; text-align: center;">월~금 오후 3시 30분 ~ 저녁 9시</p>
-            <p style="color: #ff0000; text-align: center;">랜덤 휴방</p>
-            <p style="color: black; text-align: center;">(방송시간은 지맘대로 바뀔수 있음)</p>`;
-    } else if (type === 'signature') {
-        modalContent += `
-            <img src="https://raw.githubusercontent.com/yunrang2/upload/master/다원누나시그.gif" style="display: block; margin: auto; max-width: 400px;">
-            <p style="text-align: center;">51♥ 151♥ 512♥ 1051♥ 2851♥</p>
-            <p style="text-align: center; font-size: 60px; color: #ff0000;">응원 시그니처</p>
-            <p style="text-align: center;">280♥ 282♥ 283♥ 285♥ 286♥ 289♥ 486♥</p>`;
-    } else if (type === 'bgMusic') {
-        modalContent += `
-        <div class="button-container-vertical">
-            <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%EC%84%B9%EC%8B%9C.mp3')">섹시</button>
-            <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%EB%B6%88%EC%8C%8D.mp3')">불쌍</button>
-            <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%EB%A9%B8%EB%A7%9D.mp3')">멸망</button>
-            <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%EA%B2%8C%EC%9E%84.mp3')">게임</button>
-            <button class="button-bg-music" onclick="playAudio('https://raw.githubusercontent.com/yunrang2/upload/master/%ED%99%A9%EB%8B%B9.mp3')">황당</button>
-        </div>`;
-    
-        // 브금 모달을 오른쪽으로 이동
-        document.getElementById("myModal").style.right = "0";
-        document.getElementById("myModal").style.left = "unset";
-    }
-    
-    modalContent += `</div>`;
-    document.getElementById("myModal").innerHTML = modalContent;
-    document.getElementById("myModal").style.display = "block";
-}
-
-// 모달 닫기 함수
-function closeModal() {
-    document.getElementById("myModal").style.display = 'none';
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    const bgMusicButton = document.getElementById('bgMusicButton');
-    if (bgMusicButton) {
-        bgMusicButton.addEventListener('click', function() {
-            openModal('bgMusic');
-        });
-    }
-});
-
-// 타이머 시작 함수
-let timerId; // 타이머 식별자를 저장할 변수
-let timeLeft = 0; // 남은 시간을 저장할 변수
-
-function startTimer(duration) {
-    const timerContainer = document.querySelector('.timer-container');
-    if (timerContainer) timerContainer.remove(); // 이전 타이머가 있다면 삭제
-
-    clearInterval(timerId); // 이전 타이머가 있다면 중지
-
-    timeLeft += duration; // 기존 시간에 추가
-    const newTimerContainer = document.createElement('div');
-    newTimerContainer.classList.add('timer-container');
-    newTimerContainer.innerText = timeLeft + '초';
-    document.body.appendChild(newTimerContainer);
-
-    timerId = setInterval(() => {
-        timeLeft--;
-        newTimerContainer.innerText = timeLeft + '초';
-
-        if (timeLeft <= 0) {
-            clearInterval(timerId);
-            newTimerContainer.remove();
+    <script>
+        function showStandbyScreen() {
+            const standbyImage = document.createElement('img');
+            standbyImage.src = 'https://raw.githubusercontent.com/yunrang2/upload/master/다원대기.gif';
+            standbyImage.style.position = 'fixed';
+            standbyImage.style.top = '0';
+            standbyImage.style.left = '0';
+            standbyImage.style.width = '100vw';
+            standbyImage.style.height = '100vh';
+            standbyImage.style.zIndex = '1000';
+            standbyImage.style.cursor = 'pointer';
+            standbyImage.onclick = () => standbyImage.remove();
+            document.body.appendChild(standbyImage);
         }
-    }, 1000);
-}
-
-// 하트 뿅뿅 애니메이션 적용 함수
-function startHeartbeatEffect(heartId) {
-    const heart = document.getElementById(heartId);
-    if (heart) {
-        heart.style.animation = 'heartbeat 1s infinite alternate'; // 하트 뿅뿅 애니메이션 적용
-    }
-}
-
-// 기타 기능
-function stopAllAudio() {
-    var audios = document.querySelectorAll('audio');
-    audios.forEach(function(audio) {
-        audio.pause();
-        audio.currentTime = 0;
-    });
-}
-
-function hideContent() {
-    document.querySelectorAll(".text-group, .yellow-text, .button-container").forEach(item => item.style.display = "none"); // 기존 요소 숨김
-    document.getElementById("buttonContainer").style.display = "flex"; // 돌아가기 버튼 표시
-}
-
-function goBack() {
-    location.reload(); // 페이지 새로고침
-
-    // 브금 버튼 다시 나타내기
-    const bgMusicButton = document.getElementById('bgMusicButton');
-    if (bgMusicButton) {
-        bgMusicButton.style.display = 'block';
-    }
-}
-
-function toggleEffects() {
-    hideContent(); // 컨텐츠 숨기기
-
-    const container = document.querySelector('.container');
-    if (!container) {
-        console.error('Error: Cannot find .container element.');
-        return;
-    }
-
-    // 배경음악 재생
-    const bgMusic = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/닭춤.mp3');
-    bgMusic.loop = true;
-    bgMusic.play();
-
-    // 조명 효과 추가
-    for (let i = 0; i < 50; i++) {
-        const light = document.createElement('div');
-        light.classList.add('disco-light');
-        light.style.top = Math.random() * 100 + '%';
-        light.style.left = Math.random() * 100 + '%';
-        light.style.backgroundColor = randomColor();
-        container.appendChild(light);
-    }
-
-    // 왼쪽 닭 이미지 추가
-    const leftChickenImg = document.createElement('img');
-    leftChickenImg.src = 'https://raw.githubusercontent.com/yunrang2/upload/master/dancing-chicken-ezgif.com-crop.gif';
-    leftChickenImg.classList.add('chicken-img', 'left');
-    container.appendChild(leftChickenImg);
-
-    // 오른쪽 닭 이미지 추가
-    const rightChickenImg = leftChickenImg.cloneNode(true);
-    rightChickenImg.classList.remove('left');
-    rightChickenImg.classList.add('right');
-    container.appendChild(rightChickenImg);
-
-    // 브금 버튼 숨기기
-    const bgMusicButton = document.getElementById('bgMusicButton');
-    if (bgMusicButton) {
-        bgMusicButton.style.display = 'none';
-    }
-}
-
-const goBackButton = document.getElementById('goBackButton');
-goBackButton.classList.add('go-back-button-style');
-
-document.addEventListener('DOMContentLoaded', function() {
-    const style = document.createElement('style');
-    style.innerHTML = `
-        .go-back-button-style {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-        }
-    `;
-    document.head.appendChild(style);
-});
-
-function randomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-let currentAudio = null; // 현재 재생 중인 오디오 요소를 저장할 변수
-
-function playAudio(url) {
-    if (currentAudio) {
-        currentAudio.pause(); // 현재 재생 중인 오디오를 일시 정지
-    }
-    
-    currentAudio = new Audio(url); // 새로운 오디오 요소 생성
-    currentAudio.loop = true; // 반복 재생 설정
-    currentAudio.play(); // 오디오 재생
-}
-
-// 페이지 로드 시 초기 렌더링
-document.addEventListener('DOMContentLoaded', () => {
-    renderFanBirthdays();
-    renderFanMemos();
-});
-
-function triggerScarySequence() {
-    // 모든 콘텐츠 숨기기
-    document.querySelector('.container').style.display = 'none';
-    
-    // 첫 번째 오디오 재생
-    const scaryAudio = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/공포 브금.mp3');
-    scaryAudio.play();
-
-    // 5초 후 귀신 이미지와 비명 소리 재생
-    setTimeout(() => {
-        // 비명 소리 재생
-        const screamAudio = new Audio('https://raw.githubusercontent.com/yunrang2/upload/master/비명소리.mp3');
-        screamAudio.play();
-
-        // 귀신 이미지 추가
-        const ghostImage = document.createElement('img');
-        ghostImage.src = 'https://raw.githubusercontent.com/yunrang2/upload/master/귀신.gif';
-        ghostImage.style.position = 'fixed';
-        ghostImage.style.top = '50%';
-        ghostImage.style.left = '50%';
-        ghostImage.style.transform = 'translate(-50%, -50%)';
-        ghostImage.style.width = '0';
-        ghostImage.style.height = '0';
-        ghostImage.style.transition = 'width 0.5s ease-in-out, height 0.5s ease-in-out';
-        document.body.appendChild(ghostImage);
-
-        setTimeout(() => {
-            ghostImage.style.width = '100vw';
-            ghostImage.style.height = '100vh';
-        }, 50);
-
-        // 5초 후 초기화면으로 복귀
-        setTimeout(() => {
-            document.body.removeChild(ghostImage);
-            goBack();
-        }, 5000);
-    }, 5000);
-}
-</script>
+    </script>
 </body>
 </html>
